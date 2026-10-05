@@ -4,8 +4,7 @@
    version = "1.7">
    <BuildAction
       parallelizeBuildables = "YES"
-      buildImplicitDependencies = "YES"
-      runPostActionsOnFailure = "NO">
+      buildImplicitDependencies = "YES">
       <BuildActionEntries>
          <BuildActionEntry
             buildForTesting = "YES"
@@ -15,8 +14,8 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "33E3227759889D78FF8B1CE9"
-               BuildableName = "ReelScoutApp.app"
+               BlueprintIdentifier = "RSA000000000000000000030"
+               BuildableName = "Kept.app"
                BlueprintName = "ReelScoutApp"
                ReferencedContainer = "container:ReelScoutApp.xcodeproj">
             </BuildableReference>
@@ -27,33 +26,9 @@
       buildConfiguration = "Debug"
       selectedDebuggerIdentifier = "Xcode.DebuggerFoundation.Debugger.LLDB"
       selectedLauncherIdentifier = "Xcode.DebuggerFoundation.Launcher.LLDB"
-      shouldUseLaunchSchemeArgsEnv = "YES"
-      codeCoverageEnabled = "YES"
-      onlyGenerateCoverageForSpecifiedTargets = "NO">
-      <MacroExpansion>
-         <BuildableReference
-            BuildableIdentifier = "primary"
-            BlueprintIdentifier = "33E3227759889D78FF8B1CE9"
-            BuildableName = "ReelScoutApp.app"
-            BlueprintName = "ReelScoutApp"
-            ReferencedContainer = "container:ReelScoutApp.xcodeproj">
-         </BuildableReference>
-      </MacroExpansion>
+      shouldUseLaunchSchemeArgsEnv = "YES">
       <Testables>
-         <TestableReference
-            skipped = "NO"
-            parallelizable = "NO">
-            <BuildableReference
-               BuildableIdentifier = "primary"
-               BlueprintIdentifier = "1761AAC8FD1324B34D325094"
-               BuildableName = "ReelScoutUITests.xctest"
-               BlueprintName = "ReelScoutUITests"
-               ReferencedContainer = "container:ReelScoutApp.xcodeproj">
-            </BuildableReference>
-         </TestableReference>
       </Testables>
-      <CommandLineArguments>
-      </CommandLineArguments>
    </TestAction>
    <LaunchAction
       buildConfiguration = "Debug"
@@ -69,14 +44,12 @@
          runnableDebuggingMode = "0">
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "33E3227759889D78FF8B1CE9"
-            BuildableName = "ReelScoutApp.app"
+            BlueprintIdentifier = "RSA000000000000000000030"
+            BuildableName = "Kept.app"
             BlueprintName = "ReelScoutApp"
             ReferencedContainer = "container:ReelScoutApp.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
-      <CommandLineArguments>
-      </CommandLineArguments>
    </LaunchAction>
    <ProfileAction
       buildConfiguration = "Release"
@@ -88,14 +61,12 @@
          runnableDebuggingMode = "0">
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "33E3227759889D78FF8B1CE9"
-            BuildableName = "ReelScoutApp.app"
+            BlueprintIdentifier = "RSA000000000000000000030"
+            BuildableName = "Kept.app"
             BlueprintName = "ReelScoutApp"
             ReferencedContainer = "container:ReelScoutApp.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
-      <CommandLineArguments>
-      </CommandLineArguments>
    </ProfileAction>
    <AnalyzeAction
       buildConfiguration = "Debug">

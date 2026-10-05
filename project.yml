@@ -5,34 +5,20 @@ options:
     iOS: "17.0"
   swiftVersion: "5.9"
   createIntermediateGroups: true
-  indentWidth: 2
-  tabWidth: 2
-  usesTabs: false
-  minimumXcodeGenVersion: "2.40.0"
-  xcodeVersion: "15.0"
 
 settings:
   base:
     SWIFT_VERSION: "5.9"
     IPHONEOS_DEPLOYMENT_TARGET: "17.0"
-    INFOPLIST_FILE: ReelScoutApp/Info.plist
-    CODE_SIGN_ENTITLEMENTS: ReelScoutApp/ReelScoutApp.entitlements
     ASSETCATALOG_COMPILER_APPICON_NAME: AppIcon
     ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME: AccentColor
     DEVELOPMENT_TEAM: ""
     GENERATE_INFOPLIST_FILE: false
   configs:
     Debug:
-      DEBUG_INFORMATION_FORMAT: dwarf
-      MTL_ENABLE_DEBUG_INFO: INCLUDE_SOURCE
-      MTL_FAST_MATH: YES
-      ONLY_ACTIVE_ARCH: YES
-      SWIFT_ACTIVE_COMPILATION_CONDITIONS: DEBUG
       SWIFT_OPTIMIZATION_LEVEL: -Onone
       ENABLE_TESTABILITY: YES
     Release:
-      DEBUG_INFORMATION_FORMAT: dwarf-with-dsym
-      MTL_FAST_MATH: YES
       SWIFT_COMPILATION_MODE: wholemodule
       SWIFT_OPTIMIZATION_LEVEL: -O
 
@@ -45,77 +31,46 @@ targets:
       - path: Core
       - path: Components
       - path: Domain
+      - path: Services
       - path: Features
-      - path: Mocks
-        buildPhase: resources
     resources:
       - path: Assets.xcassets
-      - path: Preview Content.xcassets
+      - path: "Preview Content.xcassets"
     settings:
       base:
         PRODUCT_BUNDLE_IDENTIFIER: com.reelscout.app
-        PRODUCT_NAME: ReelScoutApp
+        PRODUCT_NAME: Kept
         TARGETED_DEVICE_FAMILY: "1,2"
         INFOPLIST_FILE: Info.plist
         CODE_SIGN_ENTITLEMENTS: ReelScoutApp.entitlements
-        SWIFT_EMIT_LOC_STRINGS: "YES"
         ENABLE_PREVIEWS: "YES"
-    scheme:
-      testTargets:
-        - ReelScoutUITests
-      gatherCoverageData: true
-
-  ReelScoutUITests:
-    type: bundle.ui-testing
-    platform: iOS
-    sources:
-      - path: UITests
     dependencies:
-      - target: ReelScoutApp
-    settings:
-      base:
-        PRODUCT_BUNDLE_IDENTIFIER: com.reelscout.app.uitests
-        TEST_TARGET_NAME: ReelScoutApp
-        GENERATE_INFOPLIST_FILE: "YES"
-        INFOPLIST_FILE: ""
-        CODE_SIGN_ENTITLEMENTS: ""
+      - target: ShareExtension
+        embed: true
 
-  ReelScoutShareExtension:
+  ShareExtension:
     type: app-extension
     platform: iOS
     sources:
-      - path: ReelScoutShareExtension
-      - path: Domain/Models
-    resources:
-      - path: ReelScoutShareExtension/Resources
+      - path: ShareExtension
+      - path: Core/AppGroup.swift
     settings:
       base:
         PRODUCT_BUNDLE_IDENTIFIER: com.reelscout.app.ShareExtension
-        PRODUCT_NAME: ReelScoutShareExtension
+        PRODUCT_NAME: ShareExtension
         TARGETED_DEVICE_FAMILY: "1,2"
-        INFOPLIST_FILE: ReelScoutShareExtension/Info.plist
-        CODE_SIGN_ENTITLEMENTS: ReelScoutShareExtension/ReelScoutShareExtension.entitlements
-        SWIFT_EMIT_LOC_STRINGS: YES
-        NSEXTENSION_POINT_IDENTIFIER: com.apple.share-services
-        NSEXTENSION_MAIN_STORYBOARD: ShareViewController
+        INFOPLIST_FILE: ShareExtension/Info.plist
+        CODE_SIGN_ENTITLEMENTS: ShareExtension/ShareExtension.entitlements
+        GENERATE_INFOPLIST_FILE: false
 
 schemes:
-  ReelScoutApp:
+  Kept:
     build:
       targets:
         ReelScoutApp: all
-        ReelScoutShareExtension: all
+        ShareExtension: all
     run:
       config: Debug
       executable: ReelScoutApp
-    test:
-      config: Debug
-      gatherCoverageData: true
-      targets:
-        - ReelScoutUITests
-    profile:
-      config: Release
-    analyze:
-      config: Debug
     archive:
       config: Release
