@@ -39,7 +39,7 @@ struct BoardView: View {
                         ForEach(reels) { reel in
                             Button { openReel = reel } label: {
                                 VStack(alignment: .leading, spacing: 8) {
-                                    Image(reel.coverImageName).resizable().aspectRatio(contentMode: .fill)
+                                    Image.cover(reel.coverImageName).resizable().aspectRatio(contentMode: .fill)
                                         .frame(height: 200).clipShape(RoundedRectangle(cornerRadius: 22, style: .continuous))
                                     Text(reel.title ?? "").font(Theme.Font.body(14, weight: .semibold)).lineLimit(2)
                                 }
@@ -59,7 +59,7 @@ struct BoardView: View {
     private var collage: some View {
         ZStack {
             ForEach(Array(reels.prefix(4).enumerated()), id: \.offset) { i, reel in
-                Image(reel.coverImageName).resizable().aspectRatio(contentMode: .fill)
+                Image.cover(reel.coverImageName).resizable().aspectRatio(contentMode: .fill)
                     .frame(width: i == 0 ? 180 : 130, height: i == 0 ? 250 : 190)
                     .clipShape(RoundedRectangle(cornerRadius: 24, style: .continuous))
                     .overlay(RoundedRectangle(cornerRadius: 24).stroke(Theme.surface, lineWidth: 4))

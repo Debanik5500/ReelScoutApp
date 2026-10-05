@@ -37,7 +37,7 @@ struct ReelDetailView: View {
 
     private func hero(_ reel: Reel) -> some View {
         ZStack(alignment: .topTrailing) {
-            Image(reel.coverImageName).resizable().aspectRatio(contentMode: .fill)
+            Image.cover(reel.coverImageName).resizable().aspectRatio(contentMode: .fill)
                 .frame(height: 480).clipped()
             HStack {
                 Button { dismiss() } label: {
@@ -61,14 +61,23 @@ struct ReelDetailView: View {
     }
 
     private func titleBlock(_ reel: Reel) -> some View {
-        VStack(alignment: .leading, spacing: 10) {
+        // Platform is looked up from the config-driven registry — nothing
+        // here hardcodes "Instagram" or any other source by name.
+        let platform = PlatformRegistry.platform(for: reel.platformID)
+        return VStack(alignment: .leading, spacing: 10) {
             Text(reel.title ?? "").font(Theme.Font.display(40))
             HStack {
                 Circle().fill(Color.orange).frame(width: 32, height: 32)
                     .overlay(Text(String(reel.author.dropFirst().prefix(1)).uppercased()).font(Theme.Font.body(13, weight: .bold)))
                 VStack(alignment: .leading) {
                     Text(reel.author).font(Theme.Font.body(14, weight: .semibold))
-                    Text("Instagram · saved today").font(Theme.Font.body(12)).foregroundStyle(Theme.textSecondary)
+                    Label {
+                        Text("\(platform.displayName) · saved today")
+                    } icon: {
+                        Image(systemName: platform.icon)
+                    }
+                    .font(Theme.Font.body(12))
+                    .foregroundStyle(platform.color)
                 }
                 Spacer()
             }
@@ -93,7 +102,7 @@ struct ReelDetailView: View {
             }
             SwipeStack(items: reel.keyMoments, index: $frameIndex, cardWidth: 196, cardHeight: 290) { frame, isFront in
                 ZStack(alignment: .bottomLeading) {
-                    Image(frame.imageName).resizable().aspectRatio(contentMode: .fill)
+                    Image.cover(frame.imageName).resizable().aspectRatio(contentMode: .fill)
                     if isFront {
                         LinearGradient(colors: [.black.opacity(0.75), .clear], startPoint: .bottom, endPoint: .center)
                         VStack(alignment: .leading, spacing: 6) {
@@ -172,7 +181,7 @@ struct ReelDetailView: View {
         } label: {
             HStack(spacing: 14) {
                 LazyVGrid(columns: [GridItem(.flexible()), GridItem(.flexible())], spacing: 2) {
-                    ForEach(store.reels(in: board.id).prefix(4)) { r in Image(r.coverImageName).resizable().aspectRatio(contentMode: .fill) }
+                    ForEach(store.reels(in: board.id).prefix(4)) { r in Image.cover(r.coverImageName).resizable().aspectRatio(contentMode: .fill) }
                 }
                 .frame(width: 72, height: 72).clipShape(RoundedRectangle(cornerRadius: 18, style: .continuous))
                 VStack(alignment: .leading) {

@@ -28,6 +28,9 @@
 		RSA00000000000000000002B /* ShareViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = RSA000000000000000000015 /* ShareViewController.swift */; };
 		RSA00000000000000000002C /* AppGroup.swift in Sources */ = {isa = PBXBuildFile; fileRef = RSA000000000000000000003 /* AppGroup.swift */; };
 		RSA00000000000000000002F /* ShareExtension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = RSA00000000000000000002E /* ShareExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		RSA000000000000000000059 /* Platform.swift in Sources */ = {isa = PBXBuildFile; fileRef = RSA000000000000000000055 /* Platform.swift */; };
+		RSA00000000000000000005A /* Assets.swift in Sources */ = {isa = PBXBuildFile; fileRef = RSA000000000000000000056 /* Assets.swift */; };
+		RSA00000000000000000005B /* Platforms.json in Resources */ = {isa = PBXBuildFile; fileRef = RSA000000000000000000057 /* Platforms.json */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -78,6 +81,9 @@
 		RSA000000000000000000017 /* ShareExtension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "ShareExtension/ShareExtension.entitlements"; sourceTree = "<group>"; };
 		RSA00000000000000000002D /* Kept.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Kept.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		RSA00000000000000000002E /* ShareExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = ShareExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		RSA000000000000000000055 /* Platform.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecompiler.swift; path = "Domain/Platform.swift"; sourceTree = "<group>"; };
+		RSA000000000000000000056 /* Assets.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecompiler.swift; path = "Core/Assets.swift"; sourceTree = "<group>"; };
+		RSA000000000000000000057 /* Platforms.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = "Config/Platforms.json"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -98,6 +104,7 @@
 			children = (
 				RSA000000000000000000002 /* Theme.swift */,
 				RSA000000000000000000003 /* AppGroup.swift */,
+				RSA000000000000000000056 /* Assets.swift */,
 			);
 			sourceTree = "<group>";
 		};
@@ -114,6 +121,7 @@
 			isa = PBXGroup;
 			children = (
 				RSA000000000000000000004 /* Reel.swift */,
+				RSA000000000000000000055 /* Platform.swift */,
 			);
 			sourceTree = "<group>";
 		};
@@ -211,6 +219,7 @@
 				RSA000000000000000000048 /* Core */,
 				RSA000000000000000000049 /* Components */,
 				RSA00000000000000000004A /* Domain */,
+				RSA000000000000000000058 /* Config */,
 				RSA00000000000000000004B /* Services */,
 				RSA00000000000000000004C /* Features */,
 				RSA000000000000000000054 /* ShareExtension */,
@@ -219,6 +228,13 @@
 				RSA000000000000000000013 /* Info.plist */,
 				RSA000000000000000000014 /* ReelScoutApp.entitlements */,
 				RSA000000000000000000046 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		RSA000000000000000000058 /* Config */ = {
+			isa = PBXGroup;
+			children = (
+				RSA000000000000000000057 /* Platforms.json */,
 			);
 			sourceTree = "<group>";
 		};
@@ -293,6 +309,7 @@
 			files = (
 				RSA000000000000000000029 /* Assets.xcassets in Resources */,
 				RSA00000000000000000002A /* Preview Content.xcassets in Resources */,
+				RSA00000000000000000005B /* Platforms.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -321,6 +338,8 @@
 				RSA000000000000000000026 /* PlacesView.swift in Sources */,
 				RSA000000000000000000027 /* EditReelView.swift in Sources */,
 				RSA000000000000000000028 /* AppGroup.swift in Sources */,
+				RSA000000000000000000059 /* Platform.swift in Sources */,
+				RSA00000000000000000005A /* Assets.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

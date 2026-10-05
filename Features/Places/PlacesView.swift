@@ -17,7 +17,7 @@ struct PlacesView: View {
                         longitude: 139.70 + Double(reel.id.hashValue % 70) / 5000
                     )) {
                         Button { withAnimation(Theme.Spring.snappy) { selected = reel } } label: {
-                            Image(reel.coverImageName).resizable().aspectRatio(contentMode: .fill)
+                            Image.cover(reel.coverImageName).resizable().aspectRatio(contentMode: .fill)
                                 .frame(width: selected?.id == reel.id ? 44 : 36, height: selected?.id == reel.id ? 44 : 36)
                                 .clipShape(Circle())
                                 .overlay(Circle().stroke(selected?.id == reel.id ? Theme.accent : Theme.surface, lineWidth: 3))
@@ -32,7 +32,7 @@ struct PlacesView: View {
                 Capsule().fill(Theme.textSecondary.opacity(0.3)).frame(width: 40, height: 5).padding(.vertical, 12)
                 if let reel = selected ?? placedReels.first, let place = reel.place {
                     HStack(spacing: 14) {
-                        Image(reel.coverImageName).resizable().aspectRatio(contentMode: .fill)
+                        Image.cover(reel.coverImageName).resizable().aspectRatio(contentMode: .fill)
                             .frame(width: 92, height: 120).clipShape(RoundedRectangle(cornerRadius: 20, style: .continuous))
                         VStack(alignment: .leading, spacing: 6) {
                             Text(place.name).font(Theme.Font.display(26))

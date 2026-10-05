@@ -82,6 +82,7 @@ struct Reel: Identifiable, Codable, Hashable {
     var place: ReelPlace?
     var boardID: UUID?
     var category: String
+    var platformID: String
     var liked: Bool = false
 
     var isNamed: Bool { title != nil }
@@ -91,12 +92,16 @@ struct Reel: Identifiable, Codable, Hashable {
         duration: String, savedAt: Date = .now, status: ReelStatus, progress: Double = 0,
         title: String? = nil, gist: String? = nil, keyMoments: [KeyMoment] = [],
         points: [KeepPoint] = [], place: ReelPlace? = nil, boardID: UUID? = nil,
-        category: String = "Food", liked: Bool = false
+        category: String = "Food", platformID: String? = nil, liked: Bool = false
     ) {
         self.id = id; self.sourceURL = sourceURL; self.author = author
         self.coverImageName = coverImageName; self.duration = duration; self.savedAt = savedAt
         self.status = status; self.progress = progress; self.title = title; self.gist = gist
         self.keyMoments = keyMoments; self.points = points; self.place = place
-        self.boardID = boardID; self.category = category; self.liked = liked
+        self.boardID = boardID; self.category = category
+        // No platform passed in? Detect it from the URL via the config-driven
+        // PlatformRegistry rather than ever hardcoding a platform name here.
+        self.platformID = platformID ?? PlatformRegistry.detect(from: sourceURL).id
+        self.liked = liked
     }
 }

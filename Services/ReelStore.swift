@@ -61,7 +61,9 @@ final class ReelStore: ObservableObject {
 
     /// Called by the share extension hand-off: adds a queued reel for a freshly shared URL.
     func ingest(sourceURL: String) {
-        let reel = Reel(sourceURL: sourceURL, author: "unknown", coverImageName: "cover_ramen",
+        // "cover_placeholder" until the backend returns real key frames —
+        // not a hardcoded category cover, since we don't know the category yet.
+        let reel = Reel(sourceURL: sourceURL, author: "unknown", coverImageName: "cover_placeholder",
                          duration: "0:00", status: .downloading)
         reels.insert(reel, at: 0)
     }

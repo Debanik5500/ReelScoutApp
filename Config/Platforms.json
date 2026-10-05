@@ -1,0 +1,45 @@
+[
+  {
+    "id": "instagram",
+    "displayName": "Instagram",
+    "icon": "camera.fill",
+    "colorHex": "#C9401F",
+    "domains": [
+      "instagram.com",
+      "instagr.am"
+    ],
+    "enabled": true
+  },
+  {
+    "id": "tiktok",
+    "displayName": "TikTok",
+    "icon": "music.note",
+    "colorHex": "#1C1B19",
+    "domains": [
+      "tiktok.com"
+    ],
+    "enabled": true
+  },
+  {
+    "id": "youtube",
+    "displayName": "YouTube",
+    "icon": "play.rectangle.fill",
+    "colorHex": "#CC2B2B",
+    "domains": [
+      "youtube.com",
+      "youtu.be"
+    ],
+    "enabled": false
+  },
+  {
+    "id": "x",
+    "displayName": "X",
+    "icon": "bird.fill",
+    "colorHex": "#1C1B19",
+    "domains": [
+      "x.com",
+      "twitter.com"
+    ],
+    "enabled": false
+  }
+]

@@ -39,7 +39,7 @@ struct ProcessingDetailView: View {
                     .foregroundStyle(Theme.text)
 
                     ZStack {
-                        Image(reel.coverImageName).resizable().aspectRatio(contentMode: .fill)
+                        Image.cover(reel.coverImageName).resizable().aspectRatio(contentMode: .fill)
                             .frame(width: 220, height: 300)
                             .blur(radius: done ? 0 : max(2, 16 - CGFloat(step) * 4))
                             .clipShape(RoundedRectangle(cornerRadius: 32, style: .continuous))

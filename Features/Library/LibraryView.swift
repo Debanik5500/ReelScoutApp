@@ -3,6 +3,7 @@ import SwiftUI
 struct LibraryView: View {
     @EnvironmentObject var store: ReelStore
     @State private var category = "All"
+    @State private var platformID: String? = nil // nil == "All"
     @State private var searchText = ""
     @State private var openReel: Reel?
     @State private var openProcessing: Reel?
@@ -16,8 +17,9 @@ struct LibraryView: View {
     private var filtered: [Reel] {
         store.reels.filter { reel in
             let matchesCategory = category == "All" || reel.category == category
+            let matchesPlatform = platformID == nil || reel.platformID == platformID
             let matchesSearch = searchText.isEmpty || reel.matches(searchText)
-            return matchesCategory && matchesSearch
+            return matchesCategory && matchesPlatform && matchesSearch
         }
     }
     private var live: [Reel] { filtered.filter { $0.status.isLive } }
@@ -27,6 +29,7 @@ struct LibraryView: View {
         ScrollView {
             VStack(spacing: 0) {
                 header
+                platformSelector
                 if !store.liveReels.isEmpty { liveBanner }
                 boardsRow
                 if !favorites.isEmpty { favoritesRow }
@@ -75,7 +78,7 @@ struct LibraryView: View {
             HStack(spacing: 10) {
                 HStack(spacing: -12) {
                     ForEach(store.liveReels.prefix(2)) { r in
-                        Image(r.coverImageName).resizable().aspectRatio(contentMode: .fill)
+                        Image.cover(r.coverImageName).resizable().aspectRatio(contentMode: .fill)
                             .frame(width: 34, height: 44).clipShape(RoundedRectangle(cornerRadius: 10))
                             .blur(radius: 3).overlay(RoundedRectangle(cornerRadius: 10).stroke(Theme.surface, lineWidth: 2))
                     }
@@ -143,6 +146,50 @@ struct LibraryView: View {
         }
     }
 
+    /// Source selector, always shown — "All" plus one segment per entry in
+    /// `PlatformRegistry.enabled`, so it reads as "all that are enabled" today
+    /// (just Instagram) and grows automatically the moment another platform's
+    /// config flips on, no view code changes needed. Styled as a single
+    /// segmented pill — distinct from the category chips below it, which are
+    /// independent floating capsules — so the two read as separate kinds of
+    /// filter at a glance. The selected segment expands to show its label and
+    /// fills with that platform's own brand color; the rest collapse to a
+    /// plain icon, keeping the whole control compact even as more sources
+    /// get added.
+    private var platformSelector: some View {
+        HStack(spacing: 2) {
+            platformSegment(label: "All", icon: "square.grid.2x2.fill", tint: Theme.text, isSelected: platformID == nil) {
+                platformID = nil
+            }
+            ForEach(PlatformRegistry.enabled) { platform in
+                platformSegment(label: platform.displayName, icon: platform.icon, tint: platform.color, isSelected: platformID == platform.id) {
+                    platformID = platform.id
+                }
+            }
+        }
+        .padding(4)
+        .background(Theme.surface2, in: Capsule())
+        .padding(.horizontal, 16).padding(.top, 14)
+    }
+
+    private func platformSegment(label: String, icon: String, tint: Color, isSelected: Bool, action: @escaping () -> Void) -> some View {
+        Button { withAnimation(Theme.Spring.snappy) { action() } } label: {
+            HStack(spacing: isSelected ? 6 : 0) {
+                Image(systemName: icon).font(.system(size: 13, weight: .semibold))
+                if isSelected {
+                    Text(label)
+                        .font(Theme.Font.body(13, weight: .semibold))
+                        .lineLimit(1)
+                        .transition(.opacity.combined(with: .scale(scale: 0.85, anchor: .leading)))
+                }
+            }
+            .padding(.horizontal, isSelected ? 14 : 11)
+            .frame(height: 36)
+            .background(isSelected ? tint : Color.clear, in: Capsule())
+            .foregroundStyle(isSelected ? Theme.background : Theme.textSecondary)
+        }
+    }
+
     private var categoryChips: some View {
         ScrollView(.horizontal, showsIndicators: false) {
             HStack(spacing: 8) {
@@ -206,7 +253,7 @@ private struct BoardTile: View {
         VStack(alignment: .leading, spacing: 8) {
             LazyVGrid(columns: [GridItem(.flexible()), GridItem(.flexible())], spacing: 3) {
                 ForEach(reels.prefix(3)) { r in
-                    Image(r.coverImageName).resizable().aspectRatio(contentMode: .fill)
+                    Image.cover(r.coverImageName).resizable().aspectRatio(contentMode: .fill)
                 }
             }
             .frame(width: 156, height: 112)
@@ -224,7 +271,7 @@ private struct FavoriteTile: View {
     var body: some View {
         VStack(alignment: .leading, spacing: 6) {
             ZStack(alignment: .topTrailing) {
-                Image(reel.coverImageName)
+                Image.cover(reel.coverImageName)
                     .resizable()
                     .aspectRatio(contentMode: .fill)
                     .frame(width: 132, height: 132)

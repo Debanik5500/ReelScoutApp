@@ -31,7 +31,7 @@ struct SavedStackView: View {
                 if !reels.isEmpty {
                     SwipeStack(items: reels, index: $index, cardWidth: 280, cardHeight: 430) { reel, isFront in
                         VStack(alignment: .leading, spacing: 0) {
-                            Image(reel.coverImageName).resizable().aspectRatio(contentMode: .fill)
+                            Image.cover(reel.coverImageName).resizable().aspectRatio(contentMode: .fill)
                                 .frame(height: 310).clipped()
                             VStack(alignment: .leading, spacing: 10) {
                                 Text(reel.title ?? "").font(Theme.Font.display(24))

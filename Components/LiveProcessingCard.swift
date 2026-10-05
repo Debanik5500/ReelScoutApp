@@ -15,7 +15,7 @@ struct LiveProcessingCard: View {
     var body: some View {
         VStack(alignment: .leading, spacing: 8) {
             ZStack {
-                Image(reel.coverImageName)
+                Image.cover(reel.coverImageName)
                     .resizable()
                     .aspectRatio(contentMode: .fill)
                     .frame(height: height)
