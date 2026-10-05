@@ -33,9 +33,13 @@ targets:
       - path: Domain
       - path: Services
       - path: Features
-    resources:
       - path: Assets.xcassets
+        buildPhase: resources
       - path: "Preview Content.xcassets"
+        buildPhase: resources
+      - path: Config/Platforms.json
+        name: Platforms.json
+        buildPhase: resources
     settings:
       base:
         PRODUCT_BUNDLE_IDENTIFIER: com.reelscout.app

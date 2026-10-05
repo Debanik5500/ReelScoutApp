@@ -284,7 +284,7 @@ private struct FavoriteTile: View {
                     .background(.thinMaterial, in: Circle())
                     .padding(6)
             }
-            Text(reel.title ?? reel.author)
+            Text(reel.title ?? (reel.author.range(of: #"^\d+$"#, options: .regularExpression) == nil ? reel.author : "Instagram User"))
                 .font(Theme.Font.body(13, weight: .semibold))
                 .lineLimit(1)
         }

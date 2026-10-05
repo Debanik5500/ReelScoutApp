@@ -1,525 +1,624 @@
 // !$*UTF8*$!
 {
 	archiveVersion = 1;
-	classes = {};
-	objectVersion = 56;
+	classes = {
+	};
+	objectVersion = 77;
 	objects = {
 
 /* Begin PBXBuildFile section */
-		RSA000000000000000000018 /* ReelScoutApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = RSA000000000000000000001 /* ReelScoutApp.swift */; };
-		RSA000000000000000000019 /* Theme.swift in Sources */ = {isa = PBXBuildFile; fileRef = RSA000000000000000000002 /* Theme.swift */; };
-		RSA00000000000000000001A /* AppGroup.swift in Sources */ = {isa = PBXBuildFile; fileRef = RSA000000000000000000003 /* AppGroup.swift */; };
-		RSA00000000000000000001B /* Reel.swift in Sources */ = {isa = PBXBuildFile; fileRef = RSA000000000000000000004 /* Reel.swift */; };
-		RSA00000000000000000001C /* ReelStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = RSA000000000000000000005 /* ReelStore.swift */; };
-		RSA00000000000000000001D /* MockReelService.swift in Sources */ = {isa = PBXBuildFile; fileRef = RSA000000000000000000006 /* MockReelService.swift */; };
-		RSA00000000000000000001E /* PinCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = RSA000000000000000000007 /* PinCard.swift */; };
-		RSA00000000000000000001F /* LiveProcessingCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = RSA000000000000000000008 /* LiveProcessingCard.swift */; };
-		RSA000000000000000000020 /* SwipeStack.swift in Sources */ = {isa = PBXBuildFile; fileRef = RSA000000000000000000009 /* SwipeStack.swift */; };
-		RSA000000000000000000021 /* LibraryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = RSA00000000000000000000A /* LibraryView.swift */; };
-		RSA000000000000000000022 /* ProcessingDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = RSA00000000000000000000B /* ProcessingDetailView.swift */; };
-		RSA000000000000000000023 /* SavedStackView.swift in Sources */ = {isa = PBXBuildFile; fileRef = RSA00000000000000000000C /* SavedStackView.swift */; };
-		RSA000000000000000000024 /* ReelDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = RSA00000000000000000000D /* ReelDetailView.swift */; };
-		RSA000000000000000000025 /* BoardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = RSA00000000000000000000E /* BoardView.swift */; };
-		RSA000000000000000000026 /* PlacesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = RSA00000000000000000000F /* PlacesView.swift */; };
-		RSA000000000000000000027 /* EditReelView.swift in Sources */ = {isa = PBXBuildFile; fileRef = RSA000000000000000000010 /* EditReelView.swift */; };
-		RSA000000000000000000028 /* AppGroup.swift in Sources */ = {isa = PBXBuildFile; fileRef = RSA000000000000000000003 /* AppGroup.swift */; };
-		RSA000000000000000000029 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = RSA000000000000000000011 /* Assets.xcassets */; };
-		RSA00000000000000000002A /* Preview Content.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = RSA000000000000000000012 /* Preview Content.xcassets */; };
-		RSA00000000000000000002B /* ShareViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = RSA000000000000000000015 /* ShareViewController.swift */; };
-		RSA00000000000000000002C /* AppGroup.swift in Sources */ = {isa = PBXBuildFile; fileRef = RSA000000000000000000003 /* AppGroup.swift */; };
-		RSA00000000000000000002F /* ShareExtension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = RSA00000000000000000002E /* ShareExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
-		RSA000000000000000000059 /* Platform.swift in Sources */ = {isa = PBXBuildFile; fileRef = RSA000000000000000000055 /* Platform.swift */; };
-		RSA00000000000000000005A /* Assets.swift in Sources */ = {isa = PBXBuildFile; fileRef = RSA000000000000000000056 /* Assets.swift */; };
-		RSA00000000000000000005B /* Platforms.json in Resources */ = {isa = PBXBuildFile; fileRef = RSA000000000000000000057 /* Platforms.json */; };
+		06BB83B0B9D426CDF7BF5757 /* ReelStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EE18D0F6F7D2C1218298D33 /* ReelStore.swift */; };
+		0A725C7791924B1F81E16013 /* PinCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = B15C9FE8E4E9B44E0ED57DE6 /* PinCard.swift */; };
+		1496FC3891AE49B3AFCD379B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DC782221D25DCB3C41293942 /* Assets.xcassets */; };
+		2987F88E99EB1149CA8B545D /* PlacesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36FE3724C47FD745C3463AD0 /* PlacesView.swift */; };
+		2E977AE302FC409EE5DB9AEF /* ReelService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 698D06B60460302C7F3CDF57 /* ReelService.swift */; };
+		5DA75F85092BF078443B5748 /* EditReelView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E951EFAAD5262331EE66CDAA /* EditReelView.swift */; };
+		61DC9349DB839AC913F19A12 /* Preview Content.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 00B3C32B0A936F0063EE60B6 /* Preview Content.xcassets */; };
+		74EFBDE8E7ED80CAC93C34D9 /* SwipeStack.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1FE41FA2D136A9D4BD20242 /* SwipeStack.swift */; };
+		75214341E9BAE9A0653E4827 /* ProcessingDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D2C1CC54506AA7B610E1B48 /* ProcessingDetailView.swift */; };
+		7E781D8F8A6B2BDEBA353FBF /* ReelDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57990437E8A2389EF2B0BAFA /* ReelDetailView.swift */; };
+		99A2BA54D6B9558F610EABAE /* ShareExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = D44E981DD15EB3CAADDB6441 /* ShareExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		9F1831FB90D4869A5EBEBF70 /* LiveProcessingCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = D850EDEC9A8646B153B5D639 /* LiveProcessingCard.swift */; };
+		A441025DAE7BC9055BDF07D6 /* Assets.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9881FDB97E44473F1BB2673 /* Assets.swift */; };
+		B6398B43EB652C8ED94230A3 /* ShareViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 266DE555D5A612F5869FFF73 /* ShareViewController.swift */; };
+		CB3E245FE58A22855723BD82 /* AppGroup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95AE25188324388925207C92 /* AppGroup.swift */; };
+		D02DF728B3F31F74D179E36C /* SavedStackView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 980E91C75B49CB827BF15361 /* SavedStackView.swift */; };
+		D4F906CCB24FA9A86534BB00 /* Platforms.json in Resources */ = {isa = PBXBuildFile; fileRef = 7EED4437C25987A269F8C804 /* Platforms.json */; };
+		D553C46BFAB46650A76C586D /* Theme.swift in Sources */ = {isa = PBXBuildFile; fileRef = D51B891A85E31ACEDD64DE9C /* Theme.swift */; };
+		DAF69C881D4BD44D3814A554 /* MockReelService.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABED0460FE7ADF78FFF18BAE /* MockReelService.swift */; };
+		E0BC2DD99911BE7D15185F9C /* AppGroup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95AE25188324388925207C92 /* AppGroup.swift */; };
+		E4BFDE8668EE0F3ED0D7D1C2 /* Platform.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7305B7EC80DB85E644A229CD /* Platform.swift */; };
+		E94CECA11596A41398240238 /* BoardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B49D7AC03BF519C48C1A8B9 /* BoardView.swift */; };
+		ED2989F6FCF85EC06D054F5A /* ReelScoutApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23DE12BEAC8784AAD0FF1C04 /* ReelScoutApp.swift */; };
+		EEF8F48E419A1D7243D12B1A /* Reel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D52A9BD3BF4A2FFF6ACBD21A /* Reel.swift */; };
+		F43A7563420787655C0FF203 /* LibraryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F121678E4B5D8314B983C6EA /* LibraryView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
-		RSA00000000000000000003B /* PBXContainerItemProxy */ = {
+		9A1DFBAB45331F7A6563D021 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
-			containerPortal = RSA000000000000000000032 /* Project object */;
+			containerPortal = 512E7170F4C8E594BB0FF1D7 /* Project object */;
 			proxyType = 1;
-			remoteGlobalIDString = RSA000000000000000000031;
+			remoteGlobalIDString = 8E5E16E82827A8492E6423B2;
 			remoteInfo = ShareExtension;
 		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
-		RSA000000000000000000036 /* Embed App Extensions */ = {
+		805E76BB4E9EEF962570FAC3 /* Embed Foundation Extensions */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
 			dstPath = "";
 			dstSubfolderSpec = 13;
-			files = (RSA00000000000000000002F /* ShareExtension.appex in Embed App Extensions */, );
-			name = "Embed App Extensions";
+			files = (
+				99A2BA54D6B9558F610EABAE /* ShareExtension.appex in Embed Foundation Extensions */,
+			);
+			name = "Embed Foundation Extensions";
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		RSA000000000000000000001 /* ReelScoutApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecompiler.swift; path = "App/ReelScoutApp.swift"; sourceTree = "<group>"; };
-		RSA000000000000000000002 /* Theme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecompiler.swift; path = "Core/Theme.swift"; sourceTree = "<group>"; };
-		RSA000000000000000000003 /* AppGroup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecompiler.swift; path = "Core/AppGroup.swift"; sourceTree = "<group>"; };
-		RSA000000000000000000004 /* Reel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecompiler.swift; path = "Domain/Reel.swift"; sourceTree = "<group>"; };
-		RSA000000000000000000005 /* ReelStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecompiler.swift; path = "Services/ReelStore.swift"; sourceTree = "<group>"; };
-		RSA000000000000000000006 /* MockReelService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecompiler.swift; path = "Services/MockReelService.swift"; sourceTree = "<group>"; };
-		RSA000000000000000000007 /* PinCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecompiler.swift; path = "Components/PinCard.swift"; sourceTree = "<group>"; };
-		RSA000000000000000000008 /* LiveProcessingCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecompiler.swift; path = "Components/LiveProcessingCard.swift"; sourceTree = "<group>"; };
-		RSA000000000000000000009 /* SwipeStack.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecompiler.swift; path = "Components/SwipeStack.swift"; sourceTree = "<group>"; };
-		RSA00000000000000000000A /* LibraryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecompiler.swift; path = "Features/Library/LibraryView.swift"; sourceTree = "<group>"; };
-		RSA00000000000000000000B /* ProcessingDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecompiler.swift; path = "Features/Processing/ProcessingDetailView.swift"; sourceTree = "<group>"; };
-		RSA00000000000000000000C /* SavedStackView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecompiler.swift; path = "Features/Saved/SavedStackView.swift"; sourceTree = "<group>"; };
-		RSA00000000000000000000D /* ReelDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecompiler.swift; path = "Features/Reel/ReelDetailView.swift"; sourceTree = "<group>"; };
-		RSA00000000000000000000E /* BoardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecompiler.swift; path = "Features/Board/BoardView.swift"; sourceTree = "<group>"; };
-		RSA00000000000000000000F /* PlacesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecompiler.swift; path = "Features/Places/PlacesView.swift"; sourceTree = "<group>"; };
-		RSA000000000000000000010 /* EditReelView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecompiler.swift; path = "Features/Edit/EditReelView.swift"; sourceTree = "<group>"; };
-		RSA000000000000000000011 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Assets.xcassets"; sourceTree = "<group>"; };
-		RSA000000000000000000012 /* Preview Content.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Content.xcassets"; sourceTree = "<group>"; };
-		RSA000000000000000000013 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Info.plist"; sourceTree = "<group>"; };
-		RSA000000000000000000014 /* ReelScoutApp.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "ReelScoutApp.entitlements"; sourceTree = "<group>"; };
-		RSA000000000000000000015 /* ShareViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecompiler.swift; path = "ShareExtension/ShareViewController.swift"; sourceTree = "<group>"; };
-		RSA000000000000000000016 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "ShareExtension/Info.plist"; sourceTree = "<group>"; };
-		RSA000000000000000000017 /* ShareExtension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "ShareExtension/ShareExtension.entitlements"; sourceTree = "<group>"; };
-		RSA00000000000000000002D /* Kept.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Kept.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		RSA00000000000000000002E /* ShareExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = ShareExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
-		RSA000000000000000000055 /* Platform.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecompiler.swift; path = "Domain/Platform.swift"; sourceTree = "<group>"; };
-		RSA000000000000000000056 /* Assets.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecompiler.swift; path = "Core/Assets.swift"; sourceTree = "<group>"; };
-		RSA000000000000000000057 /* Platforms.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = "Config/Platforms.json"; sourceTree = "<group>"; };
+		00B3C32B0A936F0063EE60B6 /* Preview Content.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Content.xcassets"; sourceTree = "<group>"; };
+		23DE12BEAC8784AAD0FF1C04 /* ReelScoutApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReelScoutApp.swift; sourceTree = "<group>"; };
+		266DE555D5A612F5869FFF73 /* ShareViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareViewController.swift; sourceTree = "<group>"; };
+		2B49D7AC03BF519C48C1A8B9 /* BoardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoardView.swift; sourceTree = "<group>"; };
+		2D8036CB8044775AA26D6055 /* ReelScoutApp.app */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.application; path = ReelScoutApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		36FE3724C47FD745C3463AD0 /* PlacesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlacesView.swift; sourceTree = "<group>"; };
+		542E82A9463E9B656DCF8D6B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+		57990437E8A2389EF2B0BAFA /* ReelDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReelDetailView.swift; sourceTree = "<group>"; };
+		698D06B60460302C7F3CDF57 /* ReelService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReelService.swift; sourceTree = "<group>"; };
+		7305B7EC80DB85E644A229CD /* Platform.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Platform.swift; sourceTree = "<group>"; };
+		7EED4437C25987A269F8C804 /* Platforms.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = Platforms.json; sourceTree = "<group>"; };
+		95AE25188324388925207C92 /* AppGroup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppGroup.swift; sourceTree = "<group>"; };
+		980E91C75B49CB827BF15361 /* SavedStackView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SavedStackView.swift; sourceTree = "<group>"; };
+		9D2C1CC54506AA7B610E1B48 /* ProcessingDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProcessingDetailView.swift; sourceTree = "<group>"; };
+		9EE18D0F6F7D2C1218298D33 /* ReelStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReelStore.swift; sourceTree = "<group>"; };
+		ABED0460FE7ADF78FFF18BAE /* MockReelService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockReelService.swift; sourceTree = "<group>"; };
+		B15C9FE8E4E9B44E0ED57DE6 /* PinCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PinCard.swift; sourceTree = "<group>"; };
+		B9881FDB97E44473F1BB2673 /* Assets.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Assets.swift; sourceTree = "<group>"; };
+		C0E66A30F7F7C60BE5362ABE /* ShareExtension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = ShareExtension.entitlements; sourceTree = "<group>"; };
+		D44E981DD15EB3CAADDB6441 /* ShareExtension.appex */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = "wrapper.app-extension"; path = ShareExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		D51B891A85E31ACEDD64DE9C /* Theme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Theme.swift; sourceTree = "<group>"; };
+		D52A9BD3BF4A2FFF6ACBD21A /* Reel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Reel.swift; sourceTree = "<group>"; };
+		D850EDEC9A8646B153B5D639 /* LiveProcessingCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LiveProcessingCard.swift; sourceTree = "<group>"; };
+		DC782221D25DCB3C41293942 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		E951EFAAD5262331EE66CDAA /* EditReelView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditReelView.swift; sourceTree = "<group>"; };
+		F121678E4B5D8314B983C6EA /* LibraryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LibraryView.swift; sourceTree = "<group>"; };
+		F1FE41FA2D136A9D4BD20242 /* SwipeStack.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwipeStack.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
-/* Begin PBXFrameworksBuildPhase section */
-		RSA000000000000000000035 /* Frameworks */ = {isa = PBXFrameworksBuildPhase; buildActionMask = 2147483647; files = (); runOnlyForDeploymentPostprocessing = 0; };
-		RSA000000000000000000039 /* Frameworks */ = {isa = PBXFrameworksBuildPhase; buildActionMask = 2147483647; files = (); runOnlyForDeploymentPostprocessing = 0; };
-/* End PBXFrameworksBuildPhase section */
-
 /* Begin PBXGroup section */
-		RSA000000000000000000047 /* App */ = {
+		0162180EFD8DC0B4E8509308 /* Board */ = {
 			isa = PBXGroup;
 			children = (
-				RSA000000000000000000001 /* ReelScoutApp.swift */,
+				2B49D7AC03BF519C48C1A8B9 /* BoardView.swift */,
+			);
+			path = Board;
+			sourceTree = "<group>";
+		};
+		07CC93949C9870FA2C308271 /* Places */ = {
+			isa = PBXGroup;
+			children = (
+				36FE3724C47FD745C3463AD0 /* PlacesView.swift */,
+			);
+			path = Places;
+			sourceTree = "<group>";
+		};
+		1E1D3F86621926AF6A0983A7 = {
+			isa = PBXGroup;
+			children = (
+				DC782221D25DCB3C41293942 /* Assets.xcassets */,
+				00B3C32B0A936F0063EE60B6 /* Preview Content.xcassets */,
+				9FD3D9F022BB0B0826A30E54 /* App */,
+				827C573A101A3BE6DB2322CE /* Components */,
+				7D5F0C40A5B0CEA48ED1F0FB /* Config */,
+				55538FB3CC3225100671C4FF /* Core */,
+				A600A02DF5F2F379C51B70E4 /* Domain */,
+				64841A8591DF59C394147A92 /* Features */,
+				AFA3E13BCBBE51511FF9ED10 /* Services */,
+				BFA611174FD587C75C0FBC69 /* ShareExtension */,
+				B478D09EE9B741BBFB027BFB /* Products */,
 			);
 			sourceTree = "<group>";
 		};
-		RSA000000000000000000048 /* Core */ = {
+		4316A9393095A0D901F532C7 /* Saved */ = {
 			isa = PBXGroup;
 			children = (
-				RSA000000000000000000002 /* Theme.swift */,
-				RSA000000000000000000003 /* AppGroup.swift */,
-				RSA000000000000000000056 /* Assets.swift */,
+				980E91C75B49CB827BF15361 /* SavedStackView.swift */,
 			);
+			path = Saved;
 			sourceTree = "<group>";
 		};
-		RSA000000000000000000049 /* Components */ = {
+		466C483C96FE61483D91255A /* Library */ = {
 			isa = PBXGroup;
 			children = (
-				RSA000000000000000000007 /* PinCard.swift */,
-				RSA000000000000000000008 /* LiveProcessingCard.swift */,
-				RSA000000000000000000009 /* SwipeStack.swift */,
+				F121678E4B5D8314B983C6EA /* LibraryView.swift */,
 			);
+			path = Library;
 			sourceTree = "<group>";
 		};
-		RSA00000000000000000004A /* Domain */ = {
+		55538FB3CC3225100671C4FF /* Core */ = {
 			isa = PBXGroup;
 			children = (
-				RSA000000000000000000004 /* Reel.swift */,
-				RSA000000000000000000055 /* Platform.swift */,
+				95AE25188324388925207C92 /* AppGroup.swift */,
+				B9881FDB97E44473F1BB2673 /* Assets.swift */,
+				D51B891A85E31ACEDD64DE9C /* Theme.swift */,
 			);
+			path = Core;
 			sourceTree = "<group>";
 		};
-		RSA00000000000000000004B /* Services */ = {
+		64841A8591DF59C394147A92 /* Features */ = {
 			isa = PBXGroup;
 			children = (
-				RSA000000000000000000005 /* ReelStore.swift */,
-				RSA000000000000000000006 /* MockReelService.swift */,
+				0162180EFD8DC0B4E8509308 /* Board */,
+				9601B8145E63DA7E5F3D64B1 /* Edit */,
+				466C483C96FE61483D91255A /* Library */,
+				07CC93949C9870FA2C308271 /* Places */,
+				A6020A9C9CD329DFC24DEDC0 /* Processing */,
+				AAEB005C6C9153B8B0E5A576 /* Reel */,
+				4316A9393095A0D901F532C7 /* Saved */,
 			);
+			path = Features;
 			sourceTree = "<group>";
 		};
-		RSA00000000000000000004D /* Library */ = {
+		7D5F0C40A5B0CEA48ED1F0FB /* Config */ = {
 			isa = PBXGroup;
 			children = (
-				RSA00000000000000000000A /* LibraryView.swift */,
+				7EED4437C25987A269F8C804 /* Platforms.json */,
 			);
+			path = Config;
 			sourceTree = "<group>";
 		};
-		RSA00000000000000000004E /* Processing */ = {
+		827C573A101A3BE6DB2322CE /* Components */ = {
 			isa = PBXGroup;
 			children = (
-				RSA00000000000000000000B /* ProcessingDetailView.swift */,
+				D850EDEC9A8646B153B5D639 /* LiveProcessingCard.swift */,
+				B15C9FE8E4E9B44E0ED57DE6 /* PinCard.swift */,
+				F1FE41FA2D136A9D4BD20242 /* SwipeStack.swift */,
 			);
+			path = Components;
 			sourceTree = "<group>";
 		};
-		RSA00000000000000000004F /* Saved */ = {
+		9601B8145E63DA7E5F3D64B1 /* Edit */ = {
 			isa = PBXGroup;
 			children = (
-				RSA00000000000000000000C /* SavedStackView.swift */,
+				E951EFAAD5262331EE66CDAA /* EditReelView.swift */,
 			);
+			path = Edit;
 			sourceTree = "<group>";
 		};
-		RSA000000000000000000050 /* Reel */ = {
+		9FD3D9F022BB0B0826A30E54 /* App */ = {
 			isa = PBXGroup;
 			children = (
-				RSA00000000000000000000D /* ReelDetailView.swift */,
+				23DE12BEAC8784AAD0FF1C04 /* ReelScoutApp.swift */,
 			);
+			path = App;
 			sourceTree = "<group>";
 		};
-		RSA000000000000000000051 /* Board */ = {
+		A600A02DF5F2F379C51B70E4 /* Domain */ = {
 			isa = PBXGroup;
 			children = (
-				RSA00000000000000000000E /* BoardView.swift */,
+				7305B7EC80DB85E644A229CD /* Platform.swift */,
+				D52A9BD3BF4A2FFF6ACBD21A /* Reel.swift */,
 			);
+			path = Domain;
 			sourceTree = "<group>";
 		};
-		RSA000000000000000000052 /* Places */ = {
+		A6020A9C9CD329DFC24DEDC0 /* Processing */ = {
 			isa = PBXGroup;
 			children = (
-				RSA00000000000000000000F /* PlacesView.swift */,
+				9D2C1CC54506AA7B610E1B48 /* ProcessingDetailView.swift */,
 			);
+			path = Processing;
 			sourceTree = "<group>";
 		};
-		RSA000000000000000000053 /* Edit */ = {
+		AAEB005C6C9153B8B0E5A576 /* Reel */ = {
 			isa = PBXGroup;
 			children = (
-				RSA000000000000000000010 /* EditReelView.swift */,
+				57990437E8A2389EF2B0BAFA /* ReelDetailView.swift */,
 			);
+			path = Reel;
 			sourceTree = "<group>";
 		};
-		RSA00000000000000000004C /* Features */ = {
+		AFA3E13BCBBE51511FF9ED10 /* Services */ = {
 			isa = PBXGroup;
 			children = (
-				RSA00000000000000000004D /* Library */,
-				RSA00000000000000000004E /* Processing */,
-				RSA00000000000000000004F /* Saved */,
-				RSA000000000000000000050 /* Reel */,
-				RSA000000000000000000051 /* Board */,
-				RSA000000000000000000052 /* Places */,
-				RSA000000000000000000053 /* Edit */,
+				ABED0460FE7ADF78FFF18BAE /* MockReelService.swift */,
+				698D06B60460302C7F3CDF57 /* ReelService.swift */,
+				9EE18D0F6F7D2C1218298D33 /* ReelStore.swift */,
 			);
+			path = Services;
 			sourceTree = "<group>";
 		};
-		RSA000000000000000000054 /* ShareExtension */ = {
+		B478D09EE9B741BBFB027BFB /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				RSA000000000000000000015 /* ShareViewController.swift */,
-				RSA000000000000000000016 /* Info.plist */,
-				RSA000000000000000000017 /* ShareExtension.entitlements */,
+				2D8036CB8044775AA26D6055 /* ReelScoutApp.app */,
+				D44E981DD15EB3CAADDB6441 /* ShareExtension.appex */,
 			);
+			name = Products;
 			sourceTree = "<group>";
 		};
-		RSA000000000000000000046 /* Products */ = {
+		BFA611174FD587C75C0FBC69 /* ShareExtension */ = {
 			isa = PBXGroup;
 			children = (
-				RSA00000000000000000002D /* Kept.app */,
-				RSA00000000000000000002E /* ShareExtension.appex */,
+				542E82A9463E9B656DCF8D6B /* Info.plist */,
+				C0E66A30F7F7C60BE5362ABE /* ShareExtension.entitlements */,
+				266DE555D5A612F5869FFF73 /* ShareViewController.swift */,
 			);
-			sourceTree = "<group>";
-		};
-		RSA000000000000000000045 /*  */ = {
-			isa = PBXGroup;
-			children = (
-				RSA000000000000000000047 /* App */,
-				RSA000000000000000000048 /* Core */,
-				RSA000000000000000000049 /* Components */,
-				RSA00000000000000000004A /* Domain */,
-				RSA000000000000000000058 /* Config */,
-				RSA00000000000000000004B /* Services */,
-				RSA00000000000000000004C /* Features */,
-				RSA000000000000000000054 /* ShareExtension */,
-				RSA000000000000000000011 /* Assets.xcassets */,
-				RSA000000000000000000012 /* Preview Content.xcassets */,
-				RSA000000000000000000013 /* Info.plist */,
-				RSA000000000000000000014 /* ReelScoutApp.entitlements */,
-				RSA000000000000000000046 /* Products */,
-			);
-			sourceTree = "<group>";
-		};
-		RSA000000000000000000058 /* Config */ = {
-			isa = PBXGroup;
-			children = (
-				RSA000000000000000000057 /* Platforms.json */,
-			);
+			path = ShareExtension;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		RSA000000000000000000030 /* ReelScoutApp */ = {
+		33E3227759889D78FF8B1CE9 /* ReelScoutApp */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = RSA000000000000000000042 /* Build configuration list for PBXNativeTarget "ReelScoutApp" */;
+			buildConfigurationList = 22DDC7808E6883EFE0276513 /* Build configuration list for PBXNativeTarget "ReelScoutApp" */;
 			buildPhases = (
-				RSA000000000000000000033 /* Sources */,
-				RSA000000000000000000035 /* Frameworks */,
-				RSA000000000000000000034 /* Resources */,
-				RSA000000000000000000036 /* Embed App Extensions */,
+				02DA33A256D5966E56C0889A /* Sources */,
+				C12ACBE3BB3C2692F0AE353B /* Resources */,
+				805E76BB4E9EEF962570FAC3 /* Embed Foundation Extensions */,
 			);
-			buildRules = ();
-			dependencies = (RSA00000000000000000003A /* PBXTargetDependency */, );
+			buildRules = (
+			);
+			dependencies = (
+				2339ACCAFB1D2871E668ED39 /* PBXTargetDependency */,
+			);
 			name = ReelScoutApp;
-			productName = Kept;
-			productReference = RSA00000000000000000002D /* Kept.app */;
+			packageProductDependencies = (
+			);
+			productName = ReelScoutApp;
+			productReference = 2D8036CB8044775AA26D6055 /* ReelScoutApp.app */;
 			productType = "com.apple.product-type.application";
 		};
-		RSA000000000000000000031 /* ShareExtension */ = {
+		8E5E16E82827A8492E6423B2 /* ShareExtension */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = RSA000000000000000000043 /* Build configuration list for PBXNativeTarget "ShareExtension" */;
+			buildConfigurationList = 8C4D9BFB2C89EC6076167B44 /* Build configuration list for PBXNativeTarget "ShareExtension" */;
 			buildPhases = (
-				RSA000000000000000000037 /* Sources */,
-				RSA000000000000000000039 /* Frameworks */,
-				RSA000000000000000000038 /* Resources */,
+				019DB63AB0B1A3AEA7DCD215 /* Sources */,
 			);
-			buildRules = ();
-			dependencies = ();
+			buildRules = (
+			);
+			dependencies = (
+			);
 			name = ShareExtension;
+			packageProductDependencies = (
+			);
 			productName = ShareExtension;
-			productReference = RSA00000000000000000002E /* ShareExtension.appex */;
+			productReference = D44E981DD15EB3CAADDB6441 /* ShareExtension.appex */;
 			productType = "com.apple.product-type.app-extension";
 		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
-		RSA000000000000000000032 /* Project object */ = {
+		512E7170F4C8E594BB0FF1D7 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				BuildIndependentTargetsInParallel = 1;
-				LastSwiftUpdateCheck = 1500;
-				LastUpgradeCheck = 1500;
+				BuildIndependentTargetsInParallel = YES;
+				LastUpgradeCheck = 1430;
 				TargetAttributes = {
-					RSA000000000000000000030 = { CreatedOnToolsVersion = 15.0; };
-					RSA000000000000000000031 = { CreatedOnToolsVersion = 15.0; };
+					33E3227759889D78FF8B1CE9 = {
+						DevelopmentTeam = "";
+					};
+					8E5E16E82827A8492E6423B2 = {
+						DevelopmentTeam = "";
+					};
 				};
 			};
-			buildConfigurationList = RSA000000000000000000044 /* Build configuration list for PBXProject "ReelScoutApp" */;
-			compatibilityVersion = "Xcode 14.0";
+			buildConfigurationList = 0BD38FF1DFECF60D1654A22F /* Build configuration list for PBXProject "ReelScoutApp" */;
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
-			knownRegions = (en, Base, );
-			mainGroup = RSA000000000000000000045;
-			productRefGroup = RSA000000000000000000046 /* Products */;
+			knownRegions = (
+				Base,
+				en,
+			);
+			mainGroup = 1E1D3F86621926AF6A0983A7;
+			minimizedProjectReferenceProxies = 1;
+			preferredProjectObjectVersion = 77;
+			productRefGroup = B478D09EE9B741BBFB027BFB /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				RSA000000000000000000030 /* ReelScoutApp */,
-				RSA000000000000000000031 /* ShareExtension */,
+				33E3227759889D78FF8B1CE9 /* ReelScoutApp */,
+				8E5E16E82827A8492E6423B2 /* ShareExtension */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
-		RSA000000000000000000034 /* Resources */ = {
+		C12ACBE3BB3C2692F0AE353B /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				RSA000000000000000000029 /* Assets.xcassets in Resources */,
-				RSA00000000000000000002A /* Preview Content.xcassets in Resources */,
-				RSA00000000000000000005B /* Platforms.json in Resources */,
+				1496FC3891AE49B3AFCD379B /* Assets.xcassets in Resources */,
+				D4F906CCB24FA9A86534BB00 /* Platforms.json in Resources */,
+				61DC9349DB839AC913F19A12 /* Preview Content.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		RSA000000000000000000038 /* Resources */ = {isa = PBXResourcesBuildPhase; buildActionMask = 2147483647; files = (); runOnlyForDeploymentPostprocessing = 0; };
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
-		RSA000000000000000000033 /* Sources */ = {
+		019DB63AB0B1A3AEA7DCD215 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				RSA000000000000000000018 /* ReelScoutApp.swift in Sources */,
-				RSA000000000000000000019 /* Theme.swift in Sources */,
-				RSA00000000000000000001A /* AppGroup.swift in Sources */,
-				RSA00000000000000000001B /* Reel.swift in Sources */,
-				RSA00000000000000000001C /* ReelStore.swift in Sources */,
-				RSA00000000000000000001D /* MockReelService.swift in Sources */,
-				RSA00000000000000000001E /* PinCard.swift in Sources */,
-				RSA00000000000000000001F /* LiveProcessingCard.swift in Sources */,
-				RSA000000000000000000020 /* SwipeStack.swift in Sources */,
-				RSA000000000000000000021 /* LibraryView.swift in Sources */,
-				RSA000000000000000000022 /* ProcessingDetailView.swift in Sources */,
-				RSA000000000000000000023 /* SavedStackView.swift in Sources */,
-				RSA000000000000000000024 /* ReelDetailView.swift in Sources */,
-				RSA000000000000000000025 /* BoardView.swift in Sources */,
-				RSA000000000000000000026 /* PlacesView.swift in Sources */,
-				RSA000000000000000000027 /* EditReelView.swift in Sources */,
-				RSA000000000000000000028 /* AppGroup.swift in Sources */,
-				RSA000000000000000000059 /* Platform.swift in Sources */,
-				RSA00000000000000000005A /* Assets.swift in Sources */,
+				CB3E245FE58A22855723BD82 /* AppGroup.swift in Sources */,
+				B6398B43EB652C8ED94230A3 /* ShareViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		RSA000000000000000000037 /* Sources */ = {
+		02DA33A256D5966E56C0889A /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				RSA00000000000000000002B /* ShareViewController.swift in Sources */,
-				RSA00000000000000000002C /* AppGroup.swift in Sources */,
+				E0BC2DD99911BE7D15185F9C /* AppGroup.swift in Sources */,
+				A441025DAE7BC9055BDF07D6 /* Assets.swift in Sources */,
+				E94CECA11596A41398240238 /* BoardView.swift in Sources */,
+				5DA75F85092BF078443B5748 /* EditReelView.swift in Sources */,
+				F43A7563420787655C0FF203 /* LibraryView.swift in Sources */,
+				9F1831FB90D4869A5EBEBF70 /* LiveProcessingCard.swift in Sources */,
+				DAF69C881D4BD44D3814A554 /* MockReelService.swift in Sources */,
+				0A725C7791924B1F81E16013 /* PinCard.swift in Sources */,
+				2987F88E99EB1149CA8B545D /* PlacesView.swift in Sources */,
+				E4BFDE8668EE0F3ED0D7D1C2 /* Platform.swift in Sources */,
+				75214341E9BAE9A0653E4827 /* ProcessingDetailView.swift in Sources */,
+				EEF8F48E419A1D7243D12B1A /* Reel.swift in Sources */,
+				7E781D8F8A6B2BDEBA353FBF /* ReelDetailView.swift in Sources */,
+				ED2989F6FCF85EC06D054F5A /* ReelScoutApp.swift in Sources */,
+				2E977AE302FC409EE5DB9AEF /* ReelService.swift in Sources */,
+				06BB83B0B9D426CDF7BF5757 /* ReelStore.swift in Sources */,
+				D02DF728B3F31F74D179E36C /* SavedStackView.swift in Sources */,
+				74EFBDE8E7ED80CAC93C34D9 /* SwipeStack.swift in Sources */,
+				D553C46BFAB46650A76C586D /* Theme.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
-		RSA00000000000000000003A /* PBXTargetDependency */ = {
+		2339ACCAFB1D2871E668ED39 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = RSA000000000000000000031 /* ShareExtension */;
-			targetProxy = RSA00000000000000000003B /* PBXContainerItemProxy */;
+			target = 8E5E16E82827A8492E6423B2 /* ShareExtension */;
+			targetProxy = 9A1DFBAB45331F7A6563D021 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
-		RSA000000000000000000040 /* Debug */ = {
+		2373622D1FDC2E2A01B35E71 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = ReelScoutApp.entitlements;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				ENABLE_PREVIEWS = YES;
+				INFOPLIST_FILE = Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.reelscout.app;
+				PRODUCT_NAME = Kept;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		5BE888060B438D1885713646 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = ReelScoutApp.entitlements;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				ENABLE_PREVIEWS = YES;
+				INFOPLIST_FILE = Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.reelscout.app;
+				PRODUCT_NAME = Kept;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		6C23B562C39343411CF1EDF0 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_ENTITLEMENTS = ShareExtension/ShareExtension.entitlements;
+				GENERATE_INFOPLIST_FILE = NO;
+				INFOPLIST_FILE = ShareExtension/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.reelscout.app.ShareExtension;
+				PRODUCT_NAME = ShareExtension;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		B5827D3F8E17C54392910D88 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
 				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEVELOPMENT_TEAM = "";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				GENERATE_INFOPLIST_FILE = NO;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				SWIFT_VERSION = 5.9;
+			};
+			name = Release;
+		};
+		DAD745109157B2B2EC5AEAA2 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_ENTITLEMENTS = ShareExtension/ShareExtension.entitlements;
+				GENERATE_INFOPLIST_FILE = NO;
+				INFOPLIST_FILE = ShareExtension/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.reelscout.app.ShareExtension;
+				PRODUCT_NAME = ShareExtension;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		EC9DA194C6AE8BFE05CEBA0B /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEVELOPMENT_TEAM = "";
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
-				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_OPTIMIZATION_LEVEL = 0;
-				GCC_PREPROCESSOR_DEFINITIONS = "DEBUG=1 $(inherited)";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"DEBUG=1",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				GENERATE_INFOPLIST_FILE = NO;
 				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = iphoneos;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.9;
 			};
 			name = Debug;
-		};
-		RSA000000000000000000041 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_SEARCH_USER_PATHS = NO;
-				CLANG_ENABLE_MODULES = YES;
-				CLANG_ENABLE_OBJC_ARC = YES;
-				COPY_PHASE_STRIP = NO;
-				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				ENABLE_NS_ASSERTIONS = NO;
-				ENABLE_STRICT_OBJC_MSGSEND = YES;
-				GCC_C_LANGUAGE_STANDARD = gnu17;
-				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
-				MTL_ENABLE_DEBUG_INFO = NO;
-				SDKROOT = iphoneos;
-				SWIFT_COMPILATION_MODE = wholemodule;
-				VALIDATE_PRODUCT = YES;
-			};
-			name = Release;
-		};
-		RSA00000000000000000003C /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				CODE_SIGN_ENTITLEMENTS = ReelScoutApp.entitlements;
-				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = "";
-				ENABLE_PREVIEWS = YES;
-				GENERATE_INFOPLIST_FILE = NO;
-				INFOPLIST_FILE = Info.plist;
-				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.reelscout.app;
-				PRODUCT_NAME = Kept;
-				SWIFT_EMIT_LOC_STRINGS = YES;
-				SWIFT_VERSION = 5.9;
-				TARGETED_DEVICE_FAMILY = "1,2";
-			};
-			name = Debug;
-		};
-		RSA00000000000000000003D /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				CODE_SIGN_ENTITLEMENTS = ReelScoutApp.entitlements;
-				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = "";
-				ENABLE_PREVIEWS = YES;
-				GENERATE_INFOPLIST_FILE = NO;
-				INFOPLIST_FILE = Info.plist;
-				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.reelscout.app;
-				PRODUCT_NAME = Kept;
-				SWIFT_EMIT_LOC_STRINGS = YES;
-				SWIFT_VERSION = 5.9;
-				TARGETED_DEVICE_FAMILY = "1,2";
-			};
-			name = Release;
-		};
-		RSA00000000000000000003E /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				CODE_SIGN_ENTITLEMENTS = ShareExtension/ShareExtension.entitlements;
-				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = "";
-				ENABLE_PREVIEWS = YES;
-				GENERATE_INFOPLIST_FILE = NO;
-				INFOPLIST_FILE = ShareExtension/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.reelscout.app.ShareExtension;
-				PRODUCT_NAME = ShareExtension;
-				SKIP_INSTALL = YES;
-				SWIFT_EMIT_LOC_STRINGS = YES;
-				SWIFT_VERSION = 5.9;
-				TARGETED_DEVICE_FAMILY = "1,2";
-			};
-			name = Debug;
-		};
-		RSA00000000000000000003F /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				CODE_SIGN_ENTITLEMENTS = ShareExtension/ShareExtension.entitlements;
-				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = "";
-				ENABLE_PREVIEWS = YES;
-				GENERATE_INFOPLIST_FILE = NO;
-				INFOPLIST_FILE = ShareExtension/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.reelscout.app.ShareExtension;
-				PRODUCT_NAME = ShareExtension;
-				SKIP_INSTALL = YES;
-				SWIFT_EMIT_LOC_STRINGS = YES;
-				SWIFT_VERSION = 5.9;
-				TARGETED_DEVICE_FAMILY = "1,2";
-			};
-			name = Release;
 		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		RSA000000000000000000044 /* Build configuration list for PBXProject "ReelScoutApp" */ = {
+		0BD38FF1DFECF60D1654A22F /* Build configuration list for PBXProject "ReelScoutApp" */ = {
 			isa = XCConfigurationList;
-			buildConfigurations = (RSA000000000000000000040 /* Debug */, RSA000000000000000000041 /* Release */, );
+			buildConfigurations = (
+				EC9DA194C6AE8BFE05CEBA0B /* Debug */,
+				B5827D3F8E17C54392910D88 /* Release */,
+			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
+			defaultConfigurationName = Debug;
 		};
-		RSA000000000000000000042 /* Build configuration list for PBXNativeTarget "ReelScoutApp" */ = {
+		22DDC7808E6883EFE0276513 /* Build configuration list for PBXNativeTarget "ReelScoutApp" */ = {
 			isa = XCConfigurationList;
-			buildConfigurations = (RSA00000000000000000003C /* Debug */, RSA00000000000000000003D /* Release */, );
+			buildConfigurations = (
+				2373622D1FDC2E2A01B35E71 /* Debug */,
+				5BE888060B438D1885713646 /* Release */,
+			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
+			defaultConfigurationName = Debug;
 		};
-		RSA000000000000000000043 /* Build configuration list for PBXNativeTarget "ShareExtension" */ = {
+		8C4D9BFB2C89EC6076167B44 /* Build configuration list for PBXNativeTarget "ShareExtension" */ = {
 			isa = XCConfigurationList;
-			buildConfigurations = (RSA00000000000000000003E /* Debug */, RSA00000000000000000003F /* Release */, );
+			buildConfigurations = (
+				DAD745109157B2B2EC5AEAA2 /* Debug */,
+				6C23B562C39343411CF1EDF0 /* Release */,
+			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
+			defaultConfigurationName = Debug;
 		};
 /* End XCConfigurationList section */
 	};
-	rootObject = RSA000000000000000000032 /* Project object */;
+	rootObject = 512E7170F4C8E594BB0FF1D7 /* Project object */;
 }

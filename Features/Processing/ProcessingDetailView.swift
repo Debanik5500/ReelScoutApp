@@ -51,7 +51,7 @@ struct ProcessingDetailView: View {
                     VStack(alignment: .leading, spacing: 4) {
                         Text(done ? "READY" : "KEPT IS READING")
                             .font(Theme.Font.body(12, weight: .bold)).foregroundStyle(Theme.accentHighlight)
-                        Text(step >= 2 ? (reel.title ?? "A reel from \(reel.author)") : "A reel from \(reel.author)")
+                        Text(step >= 2 ? (reel.title ?? ("A reel from " + (reel.author.allSatisfy { $0.isNumber } ? "Instagram User" : reel.author))) : ("A reel from " + (reel.author.allSatisfy { $0.isNumber } ? "Instagram User" : reel.author)))
                             .font(Theme.Font.display(32))
 
                         VStack(spacing: 0) {

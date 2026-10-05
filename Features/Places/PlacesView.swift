@@ -18,10 +18,10 @@ struct PlacesView: View {
                     )) {
                         Button { withAnimation(Theme.Spring.snappy) { selected = reel } } label: {
                             Image.cover(reel.coverImageName).resizable().aspectRatio(contentMode: .fill)
-                                .frame(width: selected?.id == reel.id ? 44 : 36, height: selected?.id == reel.id ? 44 : 36)
-                                .clipShape(Circle())
-                                .overlay(Circle().stroke(selected?.id == reel.id ? Theme.accent : Theme.surface, lineWidth: 3))
-                                .shadow(radius: 6)
+                                    .frame(width: selected?.id == reel.id ? 44 : 36, height: selected?.id == reel.id ? 44 : 36)
+                                    .clipShape(Circle())
+                                    .overlay(Circle().stroke(selected?.id == reel.id ? Theme.accent : Theme.surface, lineWidth: 3))
+                                    .shadow(radius: 6)
                         }
                     }
                 }

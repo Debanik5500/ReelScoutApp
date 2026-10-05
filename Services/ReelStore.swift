@@ -11,6 +11,22 @@ final class ReelStore: ObservableObject {
 
     private let service: ReelService
     private var tickTimer: AnyCancellable?
+    /// Reels the user actually shared/ingested in this session — preserved
+    /// across backend fetches, unlike the mock seed reels.
+    private var localIngestedIDs: Set<UUID> = []
+
+    private enum PredefinedCategory: String, CaseIterable, Identifiable {
+        case food = "Food"
+        case travel = "Travel"
+        case fitness = "Fitness"
+        case home = "Home"
+
+        var id: String { rawValue }
+    }
+
+    private var categoryBoardIDs: [String: UUID] {
+        Dictionary(uniqueKeysWithValues: PredefinedCategory.allCases.map { ($0.rawValue, UUID()) })
+    }
 
     init(service: ReelService = MockReelService()) {
         self.service = service
@@ -20,6 +36,40 @@ final class ReelStore: ObservableObject {
         tickTimer = Timer.publish(every: 1.6, on: .main, in: .common)
             .autoconnect()
             .sink { [weak self] _ in self?.advanceProcessing() }
+
+        Task { await loadBackendReels() }
+    }
+
+    /// Swaps the mock seed reels for real backend data, keeping only reels the
+    /// user shared locally (tracked in `localIngestedIDs`). Mock seeds survive a
+    /// failed or empty fetch so the UI always has something to show.
+    private func loadBackendReels() async {
+        do {
+            let backendReels = try await ReelAPIClient.shared.fetchReels()
+            guard !backendReels.isEmpty else { return }
+            let localIngested = reels.filter { localIngestedIDs.contains($0.id) }
+            reels = localIngested + backendReels
+
+            // Assign each reel a boardID based on its category from predefined set.
+            // Reels with unsupported categories get nil boardID (appear under "All" only).
+            for i in reels.indices {
+                let cat = reels[i].category
+                if let categoryID = categoryBoardIDs[cat] {
+                    reels[i].boardID = categoryID
+                } else {
+                    reels[i].boardID = nil
+                }
+            }
+
+            // Build boards from categories present in reels.
+            let presentCategories = Set(reels.compactMap { $0.category })
+            boards = PredefinedCategory.allCases
+                .filter { presentCategories.contains($0.rawValue) }
+                .map { Board(id: UUID(), name: $0.rawValue) }
+        } catch {
+            // Backend unreachable — fall back to the mock seeds already in `reels`.
+            print("BACKEND: fetchReels failed, keeping mock reels — \(error)")
+        }
     }
 
     var liveReels: [Reel] { reels.filter { $0.status.isLive } }
@@ -65,6 +115,7 @@ final class ReelStore: ObservableObject {
         // not a hardcoded category cover, since we don't know the category yet.
         let reel = Reel(sourceURL: sourceURL, author: "unknown", coverImageName: "cover_placeholder",
                          duration: "0:00", status: .downloading)
+        localIngestedIDs.insert(reel.id)
         reels.insert(reel, at: 0)
     }
 

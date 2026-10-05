@@ -33,9 +33,10 @@ struct KeyMoment: Identifiable, Codable, Hashable {
     var label: String
     var note: String
     var imageName: String
+    var frameURL: String?
 
-    init(id: UUID = UUID(), timestamp: String, label: String, note: String, imageName: String) {
-        self.id = id; self.timestamp = timestamp; self.label = label; self.note = note; self.imageName = imageName
+    init(id: UUID = UUID(), timestamp: String, label: String, note: String, imageName: String, frameURL: String? = nil) {
+        self.id = id; self.timestamp = timestamp; self.label = label; self.note = note; self.imageName = imageName; self.frameURL = frameURL
     }
 }
 
@@ -69,11 +70,12 @@ struct Reel: Identifiable, Codable, Hashable {
     var sourceURL: String
     var author: String
     var coverImageName: String
+    var coverURL: String?
     var duration: String
     var savedAt: Date
 
     var status: ReelStatus
-    var progress: Double // 0...1 within the current step, for the ring
+    var progress: Double
 
     var title: String?
     var gist: String?
@@ -92,16 +94,16 @@ struct Reel: Identifiable, Codable, Hashable {
         duration: String, savedAt: Date = .now, status: ReelStatus, progress: Double = 0,
         title: String? = nil, gist: String? = nil, keyMoments: [KeyMoment] = [],
         points: [KeepPoint] = [], place: ReelPlace? = nil, boardID: UUID? = nil,
-        category: String = "Food", platformID: String? = nil, liked: Bool = false
+        category: String = "Food", platformID: String? = nil, liked: Bool = false,
+        coverURL: String? = nil
     ) {
         self.id = id; self.sourceURL = sourceURL; self.author = author
         self.coverImageName = coverImageName; self.duration = duration; self.savedAt = savedAt
         self.status = status; self.progress = progress; self.title = title; self.gist = gist
         self.keyMoments = keyMoments; self.points = points; self.place = place
         self.boardID = boardID; self.category = category
-        // No platform passed in? Detect it from the URL via the config-driven
-        // PlatformRegistry rather than ever hardcoding a platform name here.
         self.platformID = platformID ?? PlatformRegistry.detect(from: sourceURL).id
         self.liked = liked
+        self.coverURL = coverURL
     }
 }

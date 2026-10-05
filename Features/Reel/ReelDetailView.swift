@@ -8,6 +8,12 @@ struct ReelDetailView: View {
     @State private var frameIndex = 0
     @State private var openEdit = false
 
+    /// Key-moment swipe card geometry. Frames are remote photos of arbitrary
+    /// aspect ratio, so the card box is pinned here and the image is clipped
+    /// into it — the card never grows with its content.
+    private let keyCardWidth: CGFloat = 196
+    private let keyCardHeight: CGFloat = 290
+
     private var reel: Reel? { store.reels.first { $0.id == reelID } }
 
     var body: some View {
@@ -68,9 +74,9 @@ struct ReelDetailView: View {
             Text(reel.title ?? "").font(Theme.Font.display(40))
             HStack {
                 Circle().fill(Color.orange).frame(width: 32, height: 32)
-                    .overlay(Text(String(reel.author.dropFirst().prefix(1)).uppercased()).font(Theme.Font.body(13, weight: .bold)))
+                    .overlay(Text(String(reel.author.dropFirst().prefix(1)).uppercased().range(of: #"^\d+$"#, options: .regularExpression) == nil ? String(reel.author.dropFirst().prefix(1)).uppercased() : "U").font(Theme.Font.body(13, weight: .bold)))
                 VStack(alignment: .leading) {
-                    Text(reel.author).font(Theme.Font.body(14, weight: .semibold))
+                    Text(reel.author.range(of: #"^\d+$"#, options: .regularExpression) == nil ? reel.author : "Instagram User").font(Theme.Font.body(14, weight: .semibold))
                     Label {
                         Text("\(platform.displayName) · saved today")
                     } icon: {
@@ -100,9 +106,18 @@ struct ReelDetailView: View {
                 Spacer()
                 Text("Swipe · \(frameIndex + 1) of \(reel.keyMoments.count)").font(Theme.Font.body(13)).foregroundStyle(Theme.textSecondary)
             }
-            SwipeStack(items: reel.keyMoments, index: $frameIndex, cardWidth: 196, cardHeight: 290) { frame, isFront in
+            SwipeStack(items: reel.keyMoments, index: $frameIndex, cardWidth: keyCardWidth, cardHeight: keyCardHeight) { frame, isFront in
                 ZStack(alignment: .bottomLeading) {
-                    Image.cover(frame.imageName).resizable().aspectRatio(contentMode: .fill)
+                    ZStack {
+                        if let frameURL = frame.frameURL, !frameURL.isEmpty {
+                            RemoteImage(urlString: frameURL)
+                                .aspectRatio(contentMode: .fill)
+                        } else {
+                            Image.cover(frame.imageName).resizable().aspectRatio(contentMode: .fill)
+                        }
+                    }
+                    .frame(width: keyCardWidth, height: keyCardHeight)
+                    .clipped()
                     if isFront {
                         LinearGradient(colors: [.black.opacity(0.75), .clear], startPoint: .bottom, endPoint: .center)
                         VStack(alignment: .leading, spacing: 6) {
@@ -114,6 +129,7 @@ struct ReelDetailView: View {
                         .padding(12)
                     }
                 }
+                .frame(width: keyCardWidth, height: keyCardHeight)
                 .clipShape(RoundedRectangle(cornerRadius: 26, style: .continuous))
             }
             .frame(maxWidth: .infinity)
@@ -181,7 +197,9 @@ struct ReelDetailView: View {
         } label: {
             HStack(spacing: 14) {
                 LazyVGrid(columns: [GridItem(.flexible()), GridItem(.flexible())], spacing: 2) {
-                    ForEach(store.reels(in: board.id).prefix(4)) { r in Image.cover(r.coverImageName).resizable().aspectRatio(contentMode: .fill) }
+                    ForEach(store.reels(in: board.id).prefix(4)) { r in
+                        Image.cover(r.coverImageName).resizable().aspectRatio(contentMode: .fill)
+                    }
                 }
                 .frame(width: 72, height: 72).clipShape(RoundedRectangle(cornerRadius: 18, style: .continuous))
                 VStack(alignment: .leading) {

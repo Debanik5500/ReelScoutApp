@@ -11,7 +11,7 @@ struct SavedStackView: View {
     var body: some View {
         ZStack {
             if let current = reels[safe: index] {
-                Image(current.coverImageName).resizable().aspectRatio(contentMode: .fill)
+                Image.cover(current.coverImageName).resizable().aspectRatio(contentMode: .fill)
                     .blur(radius: 70).opacity(0.5).ignoresSafeArea()
             }
             Theme.background.opacity(0.4).ignoresSafeArea()
