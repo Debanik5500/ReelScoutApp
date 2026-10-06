@@ -11,6 +11,11 @@
   <key>CFBundleDisplayName</key><string>Save to Kept</string>
   <key>CFBundleShortVersionString</key><string>1.0</string>
   <key>CFBundleVersion</key><string>1</string>
+  <key>NSAppTransportSecurity</key>
+  <dict>
+    <key>NSAllowsLocalNetworking</key><true/>
+  </dict>
+  <key>NSLocalNetworkUsageDescription</key><string>Kept sends the reel to your own ReelScout server on your network.</string>
   <key>NSExtension</key>
   <dict>
     <key>NSExtensionAttributes</key>

@@ -7,7 +7,12 @@ struct LiveProcessingCard: View {
     let reel: Reel
     let height: CGFloat
 
-    private var step: Int { max(reel.status.stepIndex, 0) }
+    fileprivate var failed: Bool { reel.status == .failed }
+    fileprivate var queued: Bool { reel.status == .queued }
+    fileprivate var step: Int { max(reel.status.stepIndex, 0) }
+    fileprivate var sourceLabel: String {
+        reel.author.isEmpty ? PlatformRegistry.platform(for: reel.platformID).displayName : reel.author
+    }
     private var fraction: Double { (Double(step) + reel.progress) / 4 }
     private var blurRadius: CGFloat { max(2, 14 - CGFloat(step) * 4) }
     private var veilOpacity: Double { max(0, 0.5 - Double(step) * 0.09) }
@@ -15,8 +20,7 @@ struct LiveProcessingCard: View {
     var body: some View {
         VStack(alignment: .leading, spacing: 8) {
             ZStack {
-                Image.cover(reel.coverImageName)
-                    .resizable()
+                ReelCover(reel: reel)
                     .aspectRatio(contentMode: .fill)
                     .frame(height: height)
                     .clipped()
@@ -24,14 +28,18 @@ struct LiveProcessingCard: View {
                     .scaleEffect(1.15) // hide blur edge bleed
                     .animation(.easeInOut(duration: 1.0), value: blurRadius)
 
-                ScanLine(height: height)
+                if !failed && !queued { ScanLine(height: height) }
 
                 Rectangle().fill(Theme.background.opacity(veilOpacity))
 
                 VStack {
                     HStack {
                         HStack(spacing: 6) {
-                            ProgressView().controlSize(.mini)
+                            if failed {
+                                Image(systemName: "exclamationmark.triangle.fill").font(.system(size: 10))
+                            } else {
+                                ProgressView().controlSize(.mini)
+                            }
                             Text(reel.status.label).font(Theme.Font.body(11, weight: .bold))
                         }
                         .padding(.horizontal, 10).padding(.vertical, 6)
@@ -39,6 +47,11 @@ struct LiveProcessingCard: View {
                         Spacer()
                     }
                     Spacer()
+                    if queued {
+                        Image(systemName: "hourglass").font(.system(size: 22, weight: .semibold))
+                            .foregroundStyle(Theme.text.opacity(0.7))
+                            .frame(width: 56, height: 56)
+                    } else if !failed {
                     ZStack {
                         Circle().stroke(Theme.text.opacity(0.1), lineWidth: 5)
                         Circle()
@@ -48,6 +61,7 @@ struct LiveProcessingCard: View {
                         Text("\(Int(fraction * 100))%").font(Theme.Font.display(18))
                     }
                     .frame(width: 56, height: 56)
+                    }
                     Spacer()
                     HStack(spacing: 4) {
                         ForEach(0..<4, id: \.self) { i in
@@ -69,11 +83,32 @@ struct LiveProcessingCard: View {
                     ShimmerBar(width: 0.6)
                 }
             }
-            Text("Step \(step + 1) of 4 · \(reel.author)")
-                .font(Theme.Font.body(12))
-                .foregroundStyle(Theme.textSecondary)
+            footer
         }
         .animation(Theme.Spring.standard, value: step)
+    }
+}
+
+extension LiveProcessingCard {
+    /// Failed cards count down to their automatic removal; tapping opens the retry screen.
+    @ViewBuilder fileprivate var footer: some View {
+        if failed {
+            if let failedAt = reel.failedAt {
+                TimelineView(.periodic(from: .now, by: 1)) { context in
+                    let left = max(0, Int(ReelStore.failedGrace) - Int(context.date.timeIntervalSince(failedAt)))
+                    Text("Tap to retry · removed in \(left / 60):\(String(format: "%02d", left % 60))")
+                        .font(Theme.Font.body(12)).foregroundStyle(Theme.textSecondary).lineLimit(2)
+                }
+            } else {
+                Text("Tap to retry").font(Theme.Font.body(12)).foregroundStyle(Theme.textSecondary)
+            }
+        } else if queued {
+            Text("Waiting in line · starts when the reel ahead is done")
+                .font(Theme.Font.body(12)).foregroundStyle(Theme.textSecondary).lineLimit(2)
+        } else {
+            Text("Step \(step + 1) of 4 · \(sourceLabel)")
+                .font(Theme.Font.body(12)).foregroundStyle(Theme.textSecondary).lineLimit(2)
+        }
     }
 }
 

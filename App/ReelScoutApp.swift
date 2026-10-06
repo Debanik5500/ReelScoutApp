@@ -33,6 +33,7 @@ struct RootView: View {
                 .tabItem { Label("Places", systemImage: "mappin.and.ellipse") }
         }
         .tint(Theme.accent)
+        .sheet(isPresented: $store.showingPlans) { SubscribeView() }
         .onAppear { store.ingestPendingShareIfAny() }
         .onReceive(NotificationCenter.default.publisher(for: UIApplication.didBecomeActiveNotification)) { _ in
             store.ingestPendingShareIfAny()

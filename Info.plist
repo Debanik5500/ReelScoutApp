@@ -20,6 +20,8 @@
       </dict>
     </dict>
   </dict>
+  <key>ReelScoutAPIBaseURL</key><string>http://192.168.29.234:8000</string>
+  <key>NSLocalNetworkUsageDescription</key><string>Kept connects to your own ReelScout server on your network to read reels.</string>
   <key>CFBundleDevelopmentRegion</key><string>$(DEVELOPMENT_LANGUAGE)</string>
   <key>CFBundleExecutable</key><string>$(EXECUTABLE_NAME)</string>
   <key>CFBundleIdentifier</key><string>$(PRODUCT_BUNDLE_IDENTIFIER)</string>

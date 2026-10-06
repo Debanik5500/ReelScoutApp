@@ -19,6 +19,12 @@ struct RemoteImage: View {
     @State private var image: UIImage?
     @State private var isLoading = false
 
+    init(urlString: String, fallback: String = "cover_placeholder") {
+        self.urlString = urlString
+        self.fallback = fallback
+        _image = State(initialValue: ReelAPIClient.cachedImage(urlString))  // instant when already loaded
+    }
+
     var body: some View {
         Group {
             if let image = image {
@@ -29,7 +35,8 @@ struct RemoteImage: View {
                     .resizable()
             }
         }
-        .task {
+        .task(id: urlString) {
+            image = ReelAPIClient.cachedImage(urlString)  // nil when the URL changed to one not loaded yet
             await loadImage()
         }
     }
@@ -48,5 +55,15 @@ struct RemoteImage: View {
             }
         }
         // On failure `image` stays nil so `Image(fallback)` is shown.
+    }
+}
+
+/// A reel's cover: always the bundled illustration chosen for it (see `coverAssetName` in ReelService).
+/// Real video frames are shown only inside Key moments. Always resizable; callers apply `.aspectRatio`/`.frame`.
+struct ReelCover: View {
+    let reel: Reel
+
+    var body: some View {
+        Image.cover(reel.coverImageName).resizable()
     }
 }

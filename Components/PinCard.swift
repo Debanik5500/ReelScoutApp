@@ -9,8 +9,7 @@ struct PinCard: View {
     var body: some View {
         VStack(alignment: .leading, spacing: 8) {
             ZStack(alignment: .topTrailing) {
-                Image.cover(reel.coverImageName)
-                    .resizable()
+                ReelCover(reel: reel)
                     .aspectRatio(contentMode: .fill)
                     .frame(height: height)
                     .clipShape(RoundedRectangle(cornerRadius: Theme.Radius.pin, style: .continuous))

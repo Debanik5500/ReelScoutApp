@@ -5,6 +5,7 @@ import SwiftUI
 struct EditReelView: View {
     @EnvironmentObject var store: ReelStore
     @Environment(\.dismiss) private var dismiss
+    @State private var confirmingDelete = false
     let reelID: UUID
 
     @State private var title = ""
@@ -17,7 +18,7 @@ struct EditReelView: View {
     @State private var mapURL = ""
     @State private var original: Reel?
 
-    private let categories = ["Food", "Travel", "Fitness", "Home"]
+    private let categories = ["Food", "Travel", "Fitness", "Home", "Tech", "Shopping", "Learning", "Entertainment"]
 
     var body: some View {
         NavigationStack {
@@ -58,9 +59,24 @@ struct EditReelView: View {
                             .foregroundStyle(Theme.textSecondary)
                     }
                 }
+                Section {
+                    Button(role: .destructive) { confirmingDelete = true } label: {
+                        Label("Delete reel from Kept", systemImage: "trash")
+                    }
+                }
             }
             .navigationTitle("Edit details")
             .navigationBarTitleDisplayMode(.inline)
+            .confirmationDialog("Delete this reel from Kept?", isPresented: $confirmingDelete, titleVisibility: .visible) {
+                Button("Delete reel", role: .destructive) {
+                    if let reel = store.reels.first(where: { $0.id == reelID }) { store.remove(reel) }
+                    dismiss()
+                }
+                Button("Cancel", role: .cancel) {}
+            } message: {
+                Text("It is removed from this phone. You can add it again later.")
+            }
+            .scrollDismissesKeyboard(.interactively)
             .toolbar {
                 ToolbarItem(placement: .cancellationAction) { Button("Cancel") { dismiss() } }
                 ToolbarItem(placement: .confirmationAction) { Button("Done") { save(); dismiss() } }
@@ -94,11 +110,19 @@ struct EditReelView: View {
         reel.points = points
         if placeName.isEmpty && mapURL.isEmpty {
             reel.place = nil
+            reel.extraPlaces = nil
         } else {
+            let existing = reel.place
+            let name = placeName.isEmpty ? "Pinned location" : placeName
+            // Keep verified coordinates only while the place name is unchanged.
+            let keepsCoordinates = existing?.name == name
             reel.place = ReelPlace(
-                name: placeName.isEmpty ? "Pinned location" : placeName,
+                id: existing?.id ?? UUID(),
+                name: name,
                 subtitle: placeSubtitle,
-                mapURL: mapURL
+                mapURL: mapURL,
+                latitude: keepsCoordinates ? existing?.latitude : nil,
+                longitude: keepsCoordinates ? existing?.longitude : nil
             )
         }
         store.update(reel)

@@ -9,29 +9,33 @@ struct SavedStackView: View {
     private var reels: [Reel] { store.readyReels }
 
     var body: some View {
-        ZStack {
-            if let current = reels[safe: index] {
-                Image.cover(current.coverImageName).resizable().aspectRatio(contentMode: .fill)
-                    .blur(radius: 70).opacity(0.5).ignoresSafeArea()
-            }
-            Theme.background.opacity(0.4).ignoresSafeArea()
-
-            VStack(spacing: 20) {
+        // The blurred backdrop lives in `.background` so its fill-scaled image can never widen the layout
+        // (it used to push the counter pill off the left edge of the screen).
+        GeometryReader { geo in
+        ScrollView {
+        VStack(spacing: 20) {
                 HStack {
-                    Text("\(index + 1) / \(reels.count)")
-                        .font(Theme.Font.body(13, weight: .semibold))
-                        .padding(.horizontal, 14).frame(height: 36)
-                        .background(Theme.surface, in: Capsule())
                     Spacer()
+                    if !reels.isEmpty {
+                        Text("\(min(index, reels.count - 1) + 1) / \(reels.count)")
+                            .font(Theme.Font.body(13, weight: .semibold))
+                            .monospacedDigit()
+                            .fixedSize()
+                            .padding(.horizontal, 14).frame(height: 36)
+                            .background(Theme.surface, in: Capsule())
+                    }
                 }
                 .padding(.horizontal, 20).padding(.top, 8)
 
                 Text("Shuffle your saves").font(Theme.Font.display(40))
 
                 if !reels.isEmpty {
-                    SwipeStack(items: reels, index: $index, cardWidth: 280, cardHeight: 430) { reel, isFront in
+                    // Sized from the screen so the leaning front card never crosses the left edge.
+                    let cardWidth = min(280, geo.size.width - 110)
+                    SwipeStack(items: reels, index: $index, cardWidth: cardWidth, cardHeight: cardWidth * 430 / 280,
+                               onTapFront: { openReel = $0 }) { reel, isFront in
                         VStack(alignment: .leading, spacing: 0) {
-                            Image.cover(reel.coverImageName).resizable().aspectRatio(contentMode: .fill)
+                            ReelCover(reel: reel).aspectRatio(contentMode: .fill)
                                 .frame(height: 310).clipped()
                             VStack(alignment: .leading, spacing: 10) {
                                 Text(reel.title ?? "").font(Theme.Font.display(24))
@@ -72,9 +76,32 @@ struct SavedStackView: View {
                     navButton("chevron.right") { withAnimation(Theme.Spring.standard) { index = (index + 1) % max(reels.count, 1) } }
                 }
                 .padding(.bottom, 30)
-            }
         }
+        // At least one screen tall so the Spacer keeps the controls at the bottom; pull down to refresh.
+        .frame(minHeight: geo.size.height)
+        }
+        .refreshable { await store.refresh() }
+        }
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
+        .background { backdrop }
         .sheet(item: $openReel) { reel in ReelDetailView(reelID: reel.id) }
+    }
+
+    private var backdrop: some View {
+        ZStack {
+            if let current = reels[safe: index] {
+                GeometryReader { geo in
+                    ReelCover(reel: current)
+                        .aspectRatio(contentMode: .fill)
+                        .frame(width: geo.size.width, height: geo.size.height)
+                        .clipped()
+                        .blur(radius: 70)
+                        .opacity(0.5)
+                }
+            }
+            Theme.background.opacity(0.4)
+        }
+        .ignoresSafeArea()
     }
 
     private func navButton(_ icon: String, action: @escaping () -> Void) -> some View {

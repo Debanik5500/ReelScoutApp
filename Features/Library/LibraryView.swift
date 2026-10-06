@@ -8,8 +8,10 @@ struct LibraryView: View {
     @State private var openReel: Reel?
     @State private var openProcessing: Reel?
     @State private var openBoard: Board?
+    @State private var showingAdd = false
+    @FocusState private var searchFocused: Bool
 
-    private let categories = ["All", "Food", "Travel", "Fitness", "Home"]
+    private let categories = ["All", "Food", "Travel", "Fitness", "Home", "Tech", "Shopping", "Learning", "Entertainment"]
     private let cardHeight: CGFloat = 220
 
     private var favorites: [Reel] { store.reels.filter { $0.liked } }
@@ -22,8 +24,9 @@ struct LibraryView: View {
             return matchesCategory && matchesPlatform && matchesSearch
         }
     }
-    private var live: [Reel] { filtered.filter { $0.status.isLive } }
-    private var ready: [Reel] { filtered.filter { !$0.status.isLive } }
+    /// Reels still processing, plus failed ones (shown on the same card so they can be retried).
+    private var live: [Reel] { filtered.filter { $0.status.isLive || $0.status == .failed } }
+    private var ready: [Reel] { filtered.filter { !$0.status.isLive && $0.status != .failed } }
 
     var body: some View {
         ScrollView {
@@ -39,6 +42,33 @@ struct LibraryView: View {
             .padding(.bottom, 100)
         }
         .background(Theme.background)
+        .refreshable { await store.refresh() }
+        // Keyboard goes away on scroll, and on a tap anywhere (simultaneous, so cards and buttons still work).
+        .scrollDismissesKeyboard(.immediately)
+        .simultaneousGesture(TapGesture().onEnded { searchFocused = false })
+        .overlay(alignment: .bottomTrailing) {
+            VStack(alignment: .trailing, spacing: 10) {
+                if let quota = store.quota, let remaining = quota.remaining {
+                    Button { store.showingPlans = true } label: {
+                        Text(remaining == 0 ? "No reels left" : "\(remaining) reel\(remaining == 1 ? "" : "s") left")
+                            .font(Theme.Font.body(12, weight: .semibold))
+                            .padding(.horizontal, 12).padding(.vertical, 7)
+                            .background(.thinMaterial, in: Capsule())
+                            .foregroundStyle(remaining == 0 ? Theme.accentHighlight : Theme.text)
+                    }
+                }
+                Button { showingAdd = true } label: {
+                    Image(systemName: "plus").font(.system(size: 22, weight: .semibold))
+                        .frame(width: 60, height: 60)
+                        .background(Theme.accent, in: Circle())
+                        .foregroundStyle(.white)
+                        .shadow(color: Theme.accent.opacity(0.35), radius: 14, y: 8)
+                }
+                .accessibilityLabel("Add a reel")
+            }
+            .padding(.trailing, 20).padding(.bottom, 16)
+        }
+        .sheet(isPresented: $showingAdd) { AddReelView().presentationDetents([.medium]) }
         .sheet(item: $openReel) { reel in ReelDetailView(reelID: reel.id) }
         .sheet(item: $openProcessing) { reel in ProcessingDetailView(reelID: reel.id) }
         .sheet(item: $openBoard) { board in BoardView(boardID: board.id) }
@@ -54,6 +84,8 @@ struct LibraryView: View {
                     .foregroundStyle(Theme.text)
                     .textFieldStyle(.plain)
                     .submitLabel(.search)
+                    .focused($searchFocused)
+                    .onSubmit { searchFocused = false }
                     .autocorrectionDisabled()
                 if !searchText.isEmpty {
                     Button { searchText = "" } label: {
@@ -66,19 +98,22 @@ struct LibraryView: View {
             .padding(.horizontal, 14).frame(height: 44)
             .frame(maxWidth: .infinity)
             .background(Theme.surface2, in: Capsule())
-            Circle().fill(Theme.text).frame(width: 44, height: 44)
-                .overlay(Text("D").foregroundStyle(Theme.background).font(Theme.Font.body(15, weight: .semibold)))
+            Button { store.showingPlans = true } label: {
+                Circle().fill(Theme.text).frame(width: 44, height: 44)
+                    .overlay(Text("D").foregroundStyle(Theme.background).font(Theme.Font.body(15, weight: .semibold)))
+            }
+            .accessibilityLabel("Your plan")
         }
         .padding(.horizontal, 16).padding(.top, 8)
     }
 
     private var liveBanner: some View {
-        let names = store.liveReels.map { $0.status.label.lowercased() }
+        let names = store.liveReels.map { $0.status.label.lowercased() }.reduce(into: [String]()) { if !$0.contains($1) { $0.append($1) } }
         return Button { openProcessing = store.liveReels.first } label: {
             HStack(spacing: 10) {
                 HStack(spacing: -12) {
                     ForEach(store.liveReels.prefix(2)) { r in
-                        Image.cover(r.coverImageName).resizable().aspectRatio(contentMode: .fill)
+                        ReelCover(reel: r).aspectRatio(contentMode: .fill)
                             .frame(width: 34, height: 44).clipShape(RoundedRectangle(cornerRadius: 10))
                             .blur(radius: 3).overlay(RoundedRectangle(cornerRadius: 10).stroke(Theme.surface, lineWidth: 2))
                     }
@@ -223,21 +258,26 @@ struct LibraryView: View {
                 .padding(.top, 60)
             } else {
                 LazyVGrid(columns: [GridItem(.flexible(), spacing: 10), GridItem(.flexible())], spacing: 18) {
-                    ForEach(live) { reel in
-                        Button { openProcessing = reel } label: {
-                            LiveProcessingCard(reel: reel, height: cardHeight)
-                        }
-                        .buttonStyle(PressableCardStyle())
-                        .foregroundStyle(Theme.text)
-                    }
-                    ForEach(ready) { reel in
-                        Button { openReel = reel } label: {
-                            PinCard(reel: reel, height: cardHeight) {
-                                store.toggleLike(reel)
+                    // One ForEach: when a reel finishes it changes cell kind in place. (Two ForEaches sharing ids
+                    // in a lazy grid can leave the old "processing" cell on screen.)
+                    ForEach(live + ready) { reel in
+                        if reel.status.isLive || reel.status == .failed {
+                            Button { openProcessing = reel } label: {
+                                LiveProcessingCard(reel: reel, height: cardHeight)
                             }
+                            .buttonStyle(PressableCardStyle())
+                            .foregroundStyle(Theme.text)
+                            .id("live-\(reel.id)")
+                        } else {
+                            Button { openReel = reel } label: {
+                                PinCard(reel: reel, height: cardHeight) {
+                                    store.toggleLike(reel)
+                                }
+                            }
+                            .buttonStyle(PressableCardStyle())
+                            .foregroundStyle(Theme.text)
+                            .id("ready-\(reel.id)")
                         }
-                        .buttonStyle(PressableCardStyle())
-                        .foregroundStyle(Theme.text)
                     }
                 }
                 .padding(.horizontal, 12)
@@ -253,7 +293,7 @@ private struct BoardTile: View {
         VStack(alignment: .leading, spacing: 8) {
             LazyVGrid(columns: [GridItem(.flexible()), GridItem(.flexible())], spacing: 3) {
                 ForEach(reels.prefix(3)) { r in
-                    Image.cover(r.coverImageName).resizable().aspectRatio(contentMode: .fill)
+                    ReelCover(reel: r).aspectRatio(contentMode: .fill)
                 }
             }
             .frame(width: 156, height: 112)
@@ -271,8 +311,7 @@ private struct FavoriteTile: View {
     var body: some View {
         VStack(alignment: .leading, spacing: 6) {
             ZStack(alignment: .topTrailing) {
-                Image.cover(reel.coverImageName)
-                    .resizable()
+                ReelCover(reel: reel)
                     .aspectRatio(contentMode: .fill)
                     .frame(width: 132, height: 132)
                     .clipShape(RoundedRectangle(cornerRadius: 20, style: .continuous))
