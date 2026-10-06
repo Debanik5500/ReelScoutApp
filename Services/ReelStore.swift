@@ -50,7 +50,7 @@ final class ReelStore: ObservableObject {
             simulatedIDs = Set(reels.filter { $0.status.isLive }.map(\.id))
         } else {
             reels = cached
-            boards = Self.boards(for: cached)
+            boards = Self.boards(for: cached.filter { !$0.isCapture })
         }
         FailureNotifier.shared.configure()
         FailureNotifier.shared.onRetry = { [weak self] id in
@@ -184,6 +184,15 @@ final class ReelStore: ObservableObject {
             incoming.liked = reels[i].liked
             incoming.savedAt = reels[i].savedAt
             incoming.failedAt = reels[i].failedAt
+            if let old = reels[i].events, var fresh = incoming.events {
+                for k in fresh.indices {
+                    if let match = old.first(where: { $0.id == fresh[k].id }) {
+                        fresh[k].calendarState = match.calendarState  // the user's choices survive a re-sync
+                        fresh[k].reminderLeads = match.reminderLeads
+                    }
+                }
+                incoming.events = fresh
+            }
             let done = Set(reels[i].points.filter(\.done).map(\.id))
             for p in incoming.points.indices where done.contains(incoming.points[p].id) {
                 incoming.points[p].done = true
@@ -193,7 +202,8 @@ final class ReelStore: ObservableObject {
             if reels[i].status == .ready && incoming.status != .ready { return }
             if !reels[i].status.isLive && incoming.status.isLive { return }
             reels[i] = incoming
-        } else if let i = reels.firstIndex(where: { $0.status == .queued && ReelAPIClient.sameReel($0.sourceURL, incoming.sourceURL) }) {
+        } else if !incoming.sourceURL.isEmpty,
+                  let i = reels.firstIndex(where: { $0.status == .queued && ReelAPIClient.sameReel($0.sourceURL, incoming.sourceURL) }) {
             incoming.savedAt = reels[i].savedAt
             reels[i] = incoming
         } else {
@@ -233,9 +243,9 @@ final class ReelStore: ObservableObject {
 
     /// Reels whose category has no predefined board appear under "All" only.
     private func rebuildBoards() {
-        let newBoards = Self.boards(for: reels)
+        let newBoards = Self.boards(for: libraryReels)
         let idByName = Dictionary(uniqueKeysWithValues: newBoards.map { ($0.name, $0.id) })
-        for i in reels.indices { reels[i].boardID = idByName[reels[i].category] }
+        for i in reels.indices { reels[i].boardID = reels[i].isCapture ? nil : idByName[reels[i].category] }
         boards = newBoards
     }
 
@@ -254,8 +264,11 @@ final class ReelStore: ObservableObject {
 
     // MARK: - Queries & edits
 
-    var liveReels: [Reel] { reels.filter { $0.status.isLive } }
-    var readyReels: [Reel] { reels.filter { !$0.status.isLive && $0.status != .failed } }
+    /// Reels and posts (the Library). Screenshots and saved pages live in the Captures tab.
+    var libraryReels: [Reel] { reels.filter { !$0.isCapture } }
+    var captures: [Reel] { reels.filter { $0.isCapture } }
+    var liveReels: [Reel] { reels.filter { $0.status.isLive && !$0.isCapture } }
+    var readyReels: [Reel] { reels.filter { !$0.status.isLive && $0.status != .failed && !$0.isCapture } }
 
     func board(_ id: UUID?) -> Board? { boards.first { $0.id == id } }
     func reels(in boardID: UUID) -> [Reel] { reels.filter { $0.boardID == boardID } }
@@ -299,6 +312,7 @@ final class ReelStore: ObservableObject {
 
     func remove(_ reel: Reel) {
         FailureNotifier.shared.clear(reelID: reel.id)
+        ReminderScheduler.cancelAll(reelID: reel.id, events: reel.eventList)
         if reel.status == .failed, let jobID = reel.jobID {
             Task { await api.dismiss(jobID: jobID) }
         }
@@ -311,21 +325,53 @@ final class ReelStore: ObservableObject {
 
     /// Share-extension hand-off: shows a queued card immediately, then asks the backend to process the reel.
     /// Later progress arrives over the event stream and is matched back to this card by source URL.
+    /// Anything shared or pasted: a reel or post link, a web page, a Google search link.
     func ingest(sourceURL: String) {
-        // Already in the library (or already queued): nothing to do.
-        guard AppGroup.isSupportedLink(sourceURL) else { return }
-        if quota?.isOut == true { showingPlans = true; return }  // out of reels this month: show the plans
-        FailureNotifier.shared.requestAuthorization()
-        guard !reels.contains(where: { ReelAPIClient.sameReel($0.sourceURL, sourceURL) && $0.status != .failed }) else { return }
-        let reel = Reel(sourceURL: sourceURL, author: "", coverImageName: "cover_placeholder",
-                        duration: "0:00", status: .queued)
-        reels.insert(reel, at: 0)
-        Task { await submit(localID: reel.id, url: sourceURL) }
+        let link = sourceURL.trimmingCharacters(in: .whitespacesAndNewlines)
+        if AppGroup.isSupportedLink(link) {
+            guard canStartNewItem() else { return }
+            // Already in the library (or already queued): nothing to do.
+            guard !reels.contains(where: { ReelAPIClient.sameReel($0.sourceURL, link) && $0.status != .failed }) else { return }
+            enqueue(Reel(sourceURL: link, author: "", coverImageName: "cover_placeholder",
+                         duration: "0:00", status: .queued, kind: "reel")) { try await self.api.submitReel(url: link) }
+        } else if AppGroup.isWebLink(link) {
+            guard canStartNewItem() else { return }
+            guard !reels.contains(where: { $0.kind == "webpage" && $0.sourceURL == link && $0.status != .failed }) else { return }
+            enqueue(Reel(sourceURL: link, author: "", coverImageName: "cover_placeholder",
+                         duration: "0:00", status: .queued, kind: "webpage")) { try await self.api.submitWeb(url: link, text: nil) }
+        }
     }
 
-    private func submit(localID: UUID, url: String) async {
+    /// Pasted or shared text (for example a copied fixture list) with no link.
+    func ingest(text: String) {
+        let trimmed = text.trimmingCharacters(in: .whitespacesAndNewlines)
+        guard trimmed.count >= 12, canStartNewItem() else { return }
+        enqueue(Reel(sourceURL: "", author: "", coverImageName: "cover_placeholder", duration: "0:00",
+                     status: .queued, kind: "webpage")) { try await self.api.submitWeb(url: nil, text: trimmed) }
+    }
+
+    /// 1-10 screenshots as one item. `images` are JPEGs, already shrunk by the caller.
+    func ingestScreenshots(_ images: [Data]) {
+        guard !images.isEmpty, canStartNewItem() else { return }
+        enqueue(Reel(sourceURL: "", author: "", coverImageName: "cover_placeholder", duration: "0:00",
+                     status: .queued, kind: "screenshot")) { try await self.api.uploadScreenshots(images) }
+    }
+
+    /// Out of items this month: show the plans instead of starting. Also asks for notification access once.
+    private func canStartNewItem() -> Bool {
+        if quota?.isOut == true { showingPlans = true; return false }
+        FailureNotifier.shared.requestAuthorization()
+        return true
+    }
+
+    private func enqueue(_ reel: Reel, send: @escaping () async throws -> String) {
+        reels.insert(reel, at: 0)
+        Task { await submit(localID: reel.id, send: send) }
+    }
+
+    private func submit(localID: UUID, send: () async throws -> String) async {
         do {
-            let jobID = try await api.submitReel(url: url)
+            let jobID = try await send()
             Task { await refreshQuota() }
             // Adopt the backend's id right away so later events update this very card.
             let newID = ReelAPIClient.stableUUID(from: jobID)
@@ -335,8 +381,8 @@ final class ReelStore: ObservableObject {
             startSync()  // make sure the event stream is live to follow this job
         } catch {
             guard let i = reels.firstIndex(where: { $0.id == localID }) else { return }
-            if case ReelAPIError.badStatus(422) = error {
-                reels.remove(at: i)  // the server says this is not a reel link: nothing to keep
+            if case ReelAPIError.badStatus(let code) = error, [413, 422].contains(code) {
+                reels.remove(at: i)  // the server says it can't be read: nothing to keep
                 return
             }
             if case ReelAPIError.quotaExceeded(let latest) = error {
@@ -351,10 +397,55 @@ final class ReelStore: ObservableObject {
         }
     }
 
+    // MARK: - Events (calendar and reminders)
+
+    /// Every event not yet past, soonest first, across reels, posts, screenshots and pages.
+    var upcomingEvents: [(reel: Reel, event: ReelEvent)] {
+        reels.filter { !$0.status.isLive && $0.status != .failed }
+            .flatMap { reel in reel.eventList.filter { !$0.isPast }.map { (reel: reel, event: $0) } }
+            .sorted { $0.event.start < $1.event.start }
+    }
+
+    /// The first upcoming event the user has not yet answered "add to calendar?" for.
+    var pendingEventPrompt: (reel: Reel, event: ReelEvent)? {
+        upcomingEvents.first { $0.event.calendarState == nil }
+    }
+
+    func setCalendarState(_ state: CalendarState, reelID: UUID, eventID: String) {
+        updateEvent(reelID: reelID, eventID: eventID) { $0.calendarState = state }
+    }
+
+    /// Turns one reminder on or off. Returns the new state, or nil when it could not be scheduled
+    /// (notifications refused, or the time has passed).
+    @discardableResult
+    func toggleReminder(reelID: UUID, eventID: String, lead: Int) async -> Bool? {
+        guard let reel = reels.first(where: { $0.id == reelID }),
+              let event = reel.eventList.first(where: { $0.id == eventID }) else { return nil }
+        let isOn = event.reminderLeads?.contains(lead) == true
+        if isOn {
+            ReminderScheduler.cancel(reelID: reelID, eventID: eventID, lead: lead)
+            updateEvent(reelID: reelID, eventID: eventID) { $0.reminderLeads = ($0.reminderLeads ?? []).filter { $0 != lead } }
+            return false
+        }
+        guard await ReminderScheduler.schedule(reelID: reelID, reelTitle: reel.title ?? "Kept", event: event, lead: lead) else {
+            return nil
+        }
+        updateEvent(reelID: reelID, eventID: eventID) { $0.reminderLeads = ((($0.reminderLeads ?? []) + [lead]).sorted()) }
+        return true
+    }
+
+    private func updateEvent(reelID: UUID, eventID: String, _ change: (inout ReelEvent) -> Void) {
+        guard let r = reels.firstIndex(where: { $0.id == reelID }),
+              let e = reels[r].events?.firstIndex(where: { $0.id == eventID }) else { return }
+        change(&reels[r].events![e])
+        persist()
+    }
+
     /// Re-submits a failed reel.
     func retry(_ reel: Reel) {
         remove(reel)
-        ingest(sourceURL: reel.sourceURL)
+        // A failed screenshot upload can't be retried (the images are not kept): it is simply removed.
+        if !reel.sourceURL.isEmpty { ingest(sourceURL: reel.sourceURL) }
     }
 
     /// Call on app foreground: picks up a reel the share extension stashed in the App Group while the app

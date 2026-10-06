@@ -80,19 +80,58 @@ final class ReelAPIClient: ReelServiceProtocol {
 
     /// Queues the reel for background processing; returns the backend job id.
     func submitReel(url: String) async throws -> String {
-        guard let endpoint = URL(string: "/api/v1/reels", relativeTo: Self.baseURL)?.absoluteURL else {
-            throw ReelAPIError.badURL("/api/v1/reels")
+        try await postJSON("/api/v1/reels", ["url": url, "tz": TimeZone.current.identifier])
+    }
+
+    /// A web page, a Google search link (`url`) or pasted `text`; returns the backend job id.
+    func submitWeb(url: String?, text: String?) async throws -> String {
+        try await postJSON("/api/v1/web", ["url": url ?? "", "text": text ?? "", "tz": TimeZone.current.identifier])
+    }
+
+    /// Uploads 1-10 screenshots (JPEG data) as one item; returns the backend job id.
+    func uploadScreenshots(_ images: [Data]) async throws -> String {
+        guard let endpoint = URL(string: "/api/v1/screenshots", relativeTo: Self.baseURL)?.absoluteURL else {
+            throw ReelAPIError.badURL("/api/v1/screenshots")
+        }
+        let boundary = "kept-\(UUID().uuidString)"
+        var body = Data()
+        func append(_ string: String) { body.append(Data(string.utf8)) }
+        append("--\(boundary)\r\nContent-Disposition: form-data; name=\"tz\"\r\n\r\n\(TimeZone.current.identifier)\r\n")
+        for (index, image) in images.enumerated() {
+            append("--\(boundary)\r\nContent-Disposition: form-data; name=\"files\"; filename=\"shot\(index).jpg\"\r\n")
+            append("Content-Type: image/jpeg\r\n\r\n")
+            body.append(image)
+            append("\r\n")
+        }
+        append("--\(boundary)--\r\n")
+        var request = URLRequest(url: endpoint)
+        request.httpMethod = "POST"
+        request.timeoutInterval = 90
+        request.setValue("multipart/form-data; boundary=\(boundary)", forHTTPHeaderField: "Content-Type")
+        request.httpBody = body
+        return try await send(request)
+    }
+
+    private func postJSON(_ path: String, _ fields: [String: String]) async throws -> String {
+        guard let endpoint = URL(string: path, relativeTo: Self.baseURL)?.absoluteURL else {
+            throw ReelAPIError.badURL(path)
         }
         var request = URLRequest(url: endpoint)
         request.httpMethod = "POST"
         request.timeoutInterval = 30
         request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+        request.httpBody = try JSONEncoder().encode(fields)
+        return try await send(request)
+    }
+
+    /// Sends a submit request and returns the job id; a 402 becomes `.quotaExceeded` (the app shows the plans).
+    private func send(_ request: URLRequest) async throws -> String {
+        var request = request
         request.setValue(AppGroup.deviceID, forHTTPHeaderField: "X-Device-Id")
-        request.httpBody = try JSONEncoder().encode(["url": url])
         let (data, response) = try await session.data(for: request)
         if let http = response as? HTTPURLResponse, !(200..<300).contains(http.statusCode) {
             if http.statusCode == 402, let quota = try? decoder.decode(QuotaErrorResponse.self, from: data).detail {
-                throw ReelAPIError.quotaExceeded(quota)  // monthly limit reached: the app shows the plans page
+                throw ReelAPIError.quotaExceeded(quota)
             }
             throw ReelAPIError.badStatus(http.statusCode)
         }
@@ -221,6 +260,19 @@ final class ReelAPIClient: ReelServiceProtocol {
         }
         let directory = URL(string: "./", relativeTo: root)?.absoluteURL ?? root
         return URL(string: raw, relativeTo: directory)?.absoluteURL
+    }
+
+    /// Event times arrive as ISO 8601 with an offset and no seconds ("2026-11-14T18:30+05:30").
+    static func parseEventDate(_ value: String) -> Date? {
+        let text = value.trimmingCharacters(in: .whitespaces)
+        guard !text.isEmpty else { return nil }
+        let formatter = DateFormatter()
+        formatter.locale = Locale(identifier: "en_US_POSIX")
+        for pattern in ["yyyy-MM-dd'T'HH:mmXXXXX", "yyyy-MM-dd'T'HH:mm:ssXXXXX"] {
+            formatter.dateFormat = pattern
+            if let date = formatter.date(from: text) { return date }
+        }
+        return ISO8601DateFormatter().date(from: text)
     }
 
     /// Instagram shortcode from a reel URL (`/reel/<code>/`, `/reels/`, `/p/`, `/tv/`); tracking params are ignored.
@@ -378,11 +430,15 @@ private struct ReelDTO: Decodable {
     let details: [String: String]
     let chips: [String]
     let error: String
+    let kind: String
+    let shotType: String
+    let events: [EventDTO]
 
     private enum CodingKeys: String, CodingKey {
         case id, created, title, summary, category, author, duration, status, progress
         case group, platform, location, places, products, people, links, sources, points
-        case details, chips, error
+        case details, chips, error, kind, events
+        case shotType = "shot_type"
         case coverURL = "cover_url"
         case sourceURL = "source_url"
         case keyMoments = "key_moments"
@@ -414,6 +470,37 @@ private struct ReelDTO: Decodable {
         details = (try? c.decodeIfPresent([String: String].self, forKey: .details)) ?? [:]
         chips = c.list(.chips)
         error = c.string(.error)
+        kind = c.string(.kind)
+        shotType = c.string(.shotType)
+        events = c.list(.events)
+    }
+}
+
+private struct EventDTO: Decodable {
+    let id: String, title: String, start: String, end: String, timezone: String, location: String, notes: String
+    let allDay: Bool, needsCheck: Bool
+
+    private enum CodingKeys: String, CodingKey {
+        case id, title, start, end, timezone, location, notes
+        case allDay = "all_day"
+        case needsCheck = "needs_check"
+    }
+
+    init(from decoder: Decoder) throws {
+        let c = try decoder.container(keyedBy: CodingKeys.self)
+        id = c.string(.id); title = c.string(.title); start = c.string(.start); end = c.string(.end)
+        timezone = c.string(.timezone); location = c.string(.location); notes = c.string(.notes)
+        allDay = (try? c.decodeIfPresent(Bool.self, forKey: .allDay)) ?? false
+        needsCheck = (try? c.decodeIfPresent(Bool.self, forKey: .needsCheck)) ?? false
+    }
+
+    /// nil when the date can't be read (such an event is simply not shown).
+    func toEvent() -> ReelEvent? {
+        guard !title.isEmpty, let startDate = ReelAPIClient.parseEventDate(start) else { return nil }
+        return ReelEvent(id: id.isEmpty ? "\(title)|\(start)" : id, title: title, start: startDate,
+                         end: ReelAPIClient.parseEventDate(end), allDay: allDay,
+                         timeZoneID: TimeZone(identifier: timezone) != nil ? timezone : TimeZone.current.identifier,
+                         location: location, notes: notes, needsCheck: needsCheck)
     }
 }
 
@@ -570,7 +657,10 @@ private extension ReelDTO {
             chips: chips,
             errorMessage: error,
             jobID: id,
-            extraPlaces: allPlaces.count > 1 ? Array(allPlaces.dropFirst()) : nil
+            extraPlaces: allPlaces.count > 1 ? Array(allPlaces.dropFirst()) : nil,
+            kind: kind.nonBlank,
+            shotType: shotType.nonBlank,
+            events: events.isEmpty ? nil : events.compactMap { $0.toEvent() }
         )
     }
 

@@ -29,6 +29,8 @@ struct RootView: View {
                 .tabItem { Label("Library", systemImage: "square.grid.2x2.fill") }
             NavigationStack { SavedStackView() }
                 .tabItem { Label("Shuffle", systemImage: "rectangle.stack.fill") }
+            NavigationStack { CapturesView() }
+                .tabItem { Label("Captures", systemImage: "photo.on.rectangle.angled") }
             NavigationStack { PlacesView() }
                 .tabItem { Label("Places", systemImage: "mappin.and.ellipse") }
         }

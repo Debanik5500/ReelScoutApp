@@ -1,29 +1,35 @@
 import SwiftUI
 import UIKit
 
-/// Paste a reel link to have Kept read it. Same path as the share extension: `ReelStore.ingest`.
+/// Paste a reel or post link, any web page, a Google search link, or some text. Same path as the share sheet.
 struct AddReelView: View {
     @EnvironmentObject var store: ReelStore
     @Environment(\.dismiss) private var dismiss
-    @State private var link = ""
+    @State private var input = ""
     @FocusState private var focused: Bool
 
-    private var url: String? {
-        let trimmed = link.trimmingCharacters(in: .whitespacesAndNewlines)
-        guard let parsed = URL(string: trimmed), let scheme = parsed.scheme?.lowercased(),
-              ["http", "https"].contains(scheme), parsed.host != nil,
-              AppGroup.isSupportedLink(trimmed) else { return nil }
-        return trimmed
+    private enum Kind { case reel, page, text }
+
+    private var kind: Kind? {
+        let trimmed = input.trimmingCharacters(in: .whitespacesAndNewlines)
+        if AppGroup.isSupportedLink(trimmed) { return .reel }
+        if AppGroup.isWebLink(trimmed) { return .page }
+        return trimmed.count >= 12 ? .text : nil
     }
 
-    private var looksWrong: Bool {
-        !link.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty && url == nil
+    private var hint: String {
+        switch kind {
+        case .reel: return "A reel or post. Kept will download it, watch it and keep what matters."
+        case .page: return "A web page or Google result. Kept will read it and pull out events and key facts."
+        case .text: return "Text. Kept will pull out events, places and key facts."
+        case nil: return "Paste a reel or post link, a web page, a Google search link, or some text."
+        }
     }
 
     var body: some View {
-        VStack(alignment: .leading, spacing: 20) {
+        VStack(alignment: .leading, spacing: 18) {
             HStack {
-                Text("Add a reel").font(Theme.Font.display(32))
+                Text("Add to Kept").font(Theme.Font.display(32))
                 Spacer()
                 Button { dismiss() } label: {
                     Image(systemName: "xmark").font(.system(size: 14, weight: .semibold))
@@ -32,13 +38,10 @@ struct AddReelView: View {
                 .foregroundStyle(Theme.text)
             }
 
-            Text("Paste an Instagram reel link. Kept will download it, watch it and keep what matters.")
-                .font(Theme.Font.body(14)).foregroundStyle(Theme.textSecondary)
-
             if let quota = store.quota, let limit = quota.limit {
                 Button { dismiss(); store.showingPlans = true } label: {
                     HStack {
-                        Label("\(quota.remaining ?? 0) of \(limit) reels left this month", systemImage: "ticket")
+                        Label("\(quota.remaining ?? 0) of \(limit) left this month", systemImage: "ticket")
                             .font(Theme.Font.body(13, weight: .semibold))
                         Spacer()
                         Text("Plans").font(Theme.Font.body(13, weight: .semibold)).foregroundStyle(Theme.aiFg)
@@ -49,32 +52,19 @@ struct AddReelView: View {
                 .foregroundStyle(Theme.text)
             }
 
-            HStack(spacing: 10) {
-                Image(systemName: "link").foregroundStyle(Theme.textSecondary)
-                TextField("https://www.instagram.com/reel/…", text: $link)
-                    .font(Theme.Font.body(15))
-                    .textInputAutocapitalization(.never)
-                    .keyboardType(.URL)
-                    .autocorrectionDisabled()
-                    .focused($focused)
-                    .submitLabel(.go)
-                    .onSubmit(add)
-                if !link.isEmpty {
-                    Button { link = "" } label: {
-                        Image(systemName: "xmark.circle.fill").foregroundStyle(Theme.textSecondary)
-                    }
-                }
-            }
-            .padding(.horizontal, 14).frame(height: 52)
-            .background(Theme.surface, in: RoundedRectangle(cornerRadius: 18, style: .continuous))
+            TextField("Link or text", text: $input, axis: .vertical)
+                .font(Theme.Font.body(15))
+                .lineLimit(1...5)
+                .textInputAutocapitalization(.never)
+                .autocorrectionDisabled()
+                .focused($focused)
+                .padding(14)
+                .background(Theme.surface, in: RoundedRectangle(cornerRadius: 18, style: .continuous))
 
-            if looksWrong {
-                Label("That doesn't look like a reel or post link", systemImage: "exclamationmark.triangle.fill")
-                    .font(Theme.Font.body(12, weight: .semibold)).foregroundStyle(Theme.accentHighlight)
-            }
+            Text(hint).font(Theme.Font.body(13)).foregroundStyle(Theme.textSecondary)
 
             Button {
-                if let pasted = UIPasteboard.general.string { link = pasted }
+                if let pasted = UIPasteboard.general.string { input = pasted }
             } label: {
                 Label("Paste from clipboard", systemImage: "doc.on.clipboard")
                     .font(Theme.Font.body(14, weight: .semibold))
@@ -86,12 +76,12 @@ struct AddReelView: View {
             Spacer()
 
             Button(action: add) {
-                Text("Read this reel").font(Theme.Font.body(16, weight: .semibold))
+                Text("Read this").font(Theme.Font.body(16, weight: .semibold))
                     .frame(maxWidth: .infinity).frame(height: 56)
-                    .background(url == nil ? Theme.textSecondary.opacity(0.35) : Theme.accent, in: Capsule())
+                    .background(kind == nil ? Theme.textSecondary.opacity(0.35) : Theme.accent, in: Capsule())
                     .foregroundStyle(.white)
             }
-            .disabled(url == nil)
+            .disabled(kind == nil)
         }
         .padding(20)
         .background(Theme.background)
@@ -100,14 +90,17 @@ struct AddReelView: View {
         .onAppear {
             focused = true
             // Pre-fill when the clipboard already holds a link.
-            if link.isEmpty, UIPasteboard.general.hasURLs || (UIPasteboard.general.string?.hasPrefix("http") ?? false),
-               let pasted = UIPasteboard.general.string { link = pasted }
+            if input.isEmpty, UIPasteboard.general.hasURLs, let pasted = UIPasteboard.general.string { input = pasted }
         }
     }
 
     private func add() {
-        guard let url else { return }
-        store.ingest(sourceURL: url)
+        let trimmed = input.trimmingCharacters(in: .whitespacesAndNewlines)
+        switch kind {
+        case .reel, .page: store.ingest(sourceURL: trimmed)
+        case .text: store.ingest(text: trimmed)
+        case nil: return
+        }
         dismiss()
     }
 }

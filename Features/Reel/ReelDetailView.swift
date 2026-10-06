@@ -27,6 +27,7 @@ struct ReelDetailView: View {
                         VStack(alignment: .leading, spacing: 30) {
                             titleBlock(reel).reveal(0.05)
                             if reel.gist != nil { gist(reel).reveal(0.12) }
+                            if !reel.eventList.isEmpty { eventsSection(reel).reveal(0.15) }
                             if !reel.keyMoments.isEmpty { keyMoments(reel).reveal(0.18) }
                             if !reel.points.isEmpty { worthRemembering(reel).reveal(0.22) }
                             if !reel.links.isEmpty { linksSection(reel.links).reveal(0.26) }
@@ -227,6 +228,17 @@ struct ReelDetailView: View {
         }
         .padding(16).frame(maxWidth: .infinity, alignment: .leading)
         .background(Theme.aiBg, in: RoundedRectangle(cornerRadius: 24, style: .continuous))
+    }
+
+    // MARK: - Events
+
+    /// Dated things found in this reel, each with Add to Calendar and reminders.
+    private func eventsSection(_ reel: Reel) -> some View {
+        VStack(alignment: .leading, spacing: 12) {
+            sectionHeader(reel.eventList.count > 1 ? "Events" : "Event",
+                          trailing: reel.eventList.count > 1 ? secondaryLabel("\(reel.eventList.count)") : nil)
+            ForEach(reel.eventList) { event in EventCard(reelID: reel.id, event: event) }
+        }
     }
 
     // MARK: - Section scaffolding

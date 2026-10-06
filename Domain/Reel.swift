@@ -142,6 +142,12 @@ struct Reel: Identifiable, Codable, Hashable {
     var place: ReelPlace?
     /// A list reel ("5 places near Siliguri") has more than one place. Optional so older saved reels still decode.
     var extraPlaces: [ReelPlace]?
+    /// "reel", "post", "screenshot" or "webpage". Optional so older saved items still decode.
+    var kind: String?
+    /// For screenshots and pages: event, ticket, schedule, article, ...
+    var shotType: String?
+    /// Dated things found in this item, with the user's calendar and reminder choices.
+    var events: [ReelEvent]?
     /// Optional content blocks. Empty means the reel has none; views render a block only when non-empty.
     var links: [ReelLink] = []
     var products: [ReelProduct] = []
@@ -162,6 +168,10 @@ struct Reel: Identifiable, Codable, Hashable {
 
     var isNamed: Bool { title != nil }
 
+    /// Screenshots and saved pages live in the Captures tab, not in the Library.
+    var isCapture: Bool { kind == "screenshot" || kind == "webpage" }
+    var eventList: [ReelEvent] { events ?? [] }
+
     /// Every place the reel is about, in the order the reel shows them.
     var places: [ReelPlace] { (place.map { [$0] } ?? []) + (extraPlaces ?? []) }
 
@@ -174,7 +184,8 @@ struct Reel: Identifiable, Codable, Hashable {
         coverURL: String? = nil, links: [ReelLink] = [], products: [ReelProduct] = [],
         people: [ReelPerson] = [], sources: [ReelSource] = [],
         stepDetails: [String: String] = [:], chips: [String] = [], errorMessage: String = "",
-        jobID: String? = nil, extraPlaces: [ReelPlace]? = nil
+        jobID: String? = nil, extraPlaces: [ReelPlace]? = nil,
+        kind: String? = nil, shotType: String? = nil, events: [ReelEvent]? = nil
     ) {
         self.id = id; self.sourceURL = sourceURL; self.author = author
         self.coverImageName = coverImageName; self.duration = duration; self.savedAt = savedAt
@@ -187,5 +198,6 @@ struct Reel: Identifiable, Codable, Hashable {
         self.links = links; self.products = products; self.people = people; self.sources = sources
         self.stepDetails = stepDetails; self.chips = chips; self.errorMessage = errorMessage
         self.jobID = jobID; self.extraPlaces = extraPlaces
+        self.kind = kind; self.shotType = shotType; self.events = events
     }
 }

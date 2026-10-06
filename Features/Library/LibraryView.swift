@@ -14,10 +14,10 @@ struct LibraryView: View {
     private let categories = ["All", "Food", "Travel", "Fitness", "Home", "Tech", "Shopping", "Learning", "Entertainment"]
     private let cardHeight: CGFloat = 220
 
-    private var favorites: [Reel] { store.reels.filter { $0.liked } }
+    private var favorites: [Reel] { store.libraryReels.filter { $0.liked } }
 
     private var filtered: [Reel] {
-        store.reels.filter { reel in
+        store.libraryReels.filter { reel in
             let matchesCategory = category == "All" || reel.category == category
             let matchesPlatform = platformID == nil || reel.platformID == platformID
             let matchesSearch = searchText.isEmpty || reel.matches(searchText)
@@ -33,6 +33,7 @@ struct LibraryView: View {
             VStack(spacing: 0) {
                 header
                 platformSelector
+                EventPromptCard()
                 if !store.liveReels.isEmpty { liveBanner }
                 boardsRow
                 if !favorites.isEmpty { favoritesRow }
@@ -79,7 +80,7 @@ struct LibraryView: View {
             Text("Kept").font(Theme.Font.display(34, italic: true))
             HStack(spacing: 8) {
                 Image(systemName: "magnifyingglass").foregroundStyle(Theme.textSecondary)
-                TextField("Search \(store.reels.count) reels", text: $searchText)
+                TextField("Search \(store.libraryReels.count) reels", text: $searchText)
                     .font(Theme.Font.body(14))
                     .foregroundStyle(Theme.text)
                     .textFieldStyle(.plain)

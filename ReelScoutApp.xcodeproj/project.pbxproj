@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		06BB83B0B9D426CDF7BF5757 /* ReelStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EE18D0F6F7D2C1218298D33 /* ReelStore.swift */; };
+		06BB83B0B9D426CDF7BF5791 /* ReminderScheduler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EE18D0F6F7D2C1218298D61 /* ReminderScheduler.swift */; };
 		06BB83B0B9D426CDF7BF5758 /* ReelCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EE18D0F6F7D2C1218298D34 /* ReelCache.swift */; };
 		06BB83B0B9D426CDF7BF5760 /* FailureNotifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EE18D0F6F7D2C1218298D35 /* FailureNotifier.swift */; };
 		0A725C7791924B1F81E16013 /* PinCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = B15C9FE8E4E9B44E0ED57DE6 /* PinCard.swift */; };
@@ -36,8 +37,13 @@
 		E94CECA11596A41398240238 /* BoardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B49D7AC03BF519C48C1A8B9 /* BoardView.swift */; };
 		ED2989F6FCF85EC06D054F5A /* ReelScoutApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23DE12BEAC8784AAD0FF1C04 /* ReelScoutApp.swift */; };
 		EEF8F48E419A1D7243D12B1A /* Reel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D52A9BD3BF4A2FFF6ACBD21A /* Reel.swift */; };
+		06BB83B0B9D426CDF7BF5790 /* Event.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EE18D0F6F7D2C1218298D60 /* Event.swift */; };
 		06BB83B0B9D426CDF7BF5770 /* Plan.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EE18D0F6F7D2C1218298D40 /* Plan.swift */; };
 		F43A7563420787655C0FF203 /* LibraryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F121678E4B5D8314B983C6EA /* LibraryView.swift */; };
+		06BB83B0B9D426CDF7BF5795 /* CaptureDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EE18D0F6F7D2C1218298D65 /* CaptureDetailView.swift */; };
+		06BB83B0B9D426CDF7BF5794 /* CapturesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EE18D0F6F7D2C1218298D64 /* CapturesView.swift */; };
+		06BB83B0B9D426CDF7BF5793 /* EventViews.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EE18D0F6F7D2C1218298D63 /* EventViews.swift */; };
+		06BB83B0B9D426CDF7BF5792 /* CalendarEventEditor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EE18D0F6F7D2C1218298D62 /* CalendarEventEditor.swift */; };
 		06BB83B0B9D426CDF7BF5772 /* SubscribeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EE18D0F6F7D2C1218298D42 /* SubscribeView.swift */; };
 /* End PBXBuildFile section */
 
@@ -82,6 +88,7 @@
 		980E91C75B49CB827BF15361 /* SavedStackView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SavedStackView.swift; sourceTree = "<group>"; };
 		9D2C1CC54506AA7B610E1B48 /* ProcessingDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProcessingDetailView.swift; sourceTree = "<group>"; };
 		9EE18D0F6F7D2C1218298D33 /* ReelStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReelStore.swift; sourceTree = "<group>"; };
+		9EE18D0F6F7D2C1218298D61 /* ReminderScheduler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReminderScheduler.swift; sourceTree = "<group>"; };
 		9EE18D0F6F7D2C1218298D34 /* ReelCache.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReelCache.swift; sourceTree = "<group>"; };
 		9EE18D0F6F7D2C1218298D35 /* FailureNotifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FailureNotifier.swift; sourceTree = "<group>"; };
 		ABED0460FE7ADF78FFF18BAE /* MockReelService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockReelService.swift; sourceTree = "<group>"; };
@@ -92,12 +99,17 @@
 		D44E981DD15EB3CAADDB6441 /* ShareExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = ShareExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		D51B891A85E31ACEDD64DE9C /* Theme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Theme.swift; sourceTree = "<group>"; };
 		D52A9BD3BF4A2FFF6ACBD21A /* Reel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Reel.swift; sourceTree = "<group>"; };
+		9EE18D0F6F7D2C1218298D60 /* Event.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Event.swift; sourceTree = "<group>"; };
 		9EE18D0F6F7D2C1218298D40 /* Plan.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Plan.swift; sourceTree = "<group>"; };
 		D850EDEC9A8646B153B5D639 /* LiveProcessingCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LiveProcessingCard.swift; sourceTree = "<group>"; };
 		DC782221D25DCB3C41293942 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		E951EFAAD5262331EE66CDAA /* EditReelView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditReelView.swift; sourceTree = "<group>"; };
 		E951EFAAD5262331EE66CDAB /* AddReelView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddReelView.swift; sourceTree = "<group>"; };
 		F121678E4B5D8314B983C6EA /* LibraryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LibraryView.swift; sourceTree = "<group>"; };
+		9EE18D0F6F7D2C1218298D65 /* CaptureDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CaptureDetailView.swift; sourceTree = "<group>"; };
+		9EE18D0F6F7D2C1218298D64 /* CapturesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CapturesView.swift; sourceTree = "<group>"; };
+		9EE18D0F6F7D2C1218298D63 /* EventViews.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventViews.swift; sourceTree = "<group>"; };
+		9EE18D0F6F7D2C1218298D62 /* CalendarEventEditor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarEventEditor.swift; sourceTree = "<group>"; };
 		9EE18D0F6F7D2C1218298D42 /* SubscribeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubscribeView.swift; sourceTree = "<group>"; };
 		F1FE41FA2D136A9D4BD20242 /* SwipeStack.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwipeStack.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -148,6 +160,10 @@
 			isa = PBXGroup;
 			children = (
 				F121678E4B5D8314B983C6EA /* LibraryView.swift */,
+				9EE18D0F6F7D2C1218298D65 /* CaptureDetailView.swift */,
+				9EE18D0F6F7D2C1218298D64 /* CapturesView.swift */,
+				9EE18D0F6F7D2C1218298D63 /* EventViews.swift */,
+				9EE18D0F6F7D2C1218298D62 /* CalendarEventEditor.swift */,
 				9EE18D0F6F7D2C1218298D42 /* SubscribeView.swift */,
 			);
 			path = Library;
@@ -218,6 +234,7 @@
 			children = (
 				7305B7EC80DB85E644A229CD /* Platform.swift */,
 				D52A9BD3BF4A2FFF6ACBD21A /* Reel.swift */,
+				9EE18D0F6F7D2C1218298D60 /* Event.swift */,
 				9EE18D0F6F7D2C1218298D40 /* Plan.swift */,
 			);
 			path = Domain;
@@ -246,6 +263,7 @@
 				ABED0460FE7ADF78FFF18BAE /* MockReelService.swift */,
 				698D06B60460302C7F3CDF57 /* ReelService.swift */,
 				9EE18D0F6F7D2C1218298D33 /* ReelStore.swift */,
+				9EE18D0F6F7D2C1218298D61 /* ReminderScheduler.swift */,
 				9EE18D0F6F7D2C1218298D34 /* ReelCache.swift */,
 				9EE18D0F6F7D2C1218298D35 /* FailureNotifier.swift */,
 			);
@@ -374,6 +392,10 @@
 				5DA75F85092BF078443B5748 /* EditReelView.swift in Sources */,
 				5DA75F85092BF078443B5749 /* AddReelView.swift in Sources */,
 				F43A7563420787655C0FF203 /* LibraryView.swift in Sources */,
+				06BB83B0B9D426CDF7BF5795 /* CaptureDetailView.swift in Sources */,
+				06BB83B0B9D426CDF7BF5794 /* CapturesView.swift in Sources */,
+				06BB83B0B9D426CDF7BF5793 /* EventViews.swift in Sources */,
+				06BB83B0B9D426CDF7BF5792 /* CalendarEventEditor.swift in Sources */,
 				06BB83B0B9D426CDF7BF5772 /* SubscribeView.swift in Sources */,
 				9F1831FB90D4869A5EBEBF70 /* LiveProcessingCard.swift in Sources */,
 				DAF69C881D4BD44D3814A554 /* MockReelService.swift in Sources */,
@@ -382,12 +404,14 @@
 				E4BFDE8668EE0F3ED0D7D1C2 /* Platform.swift in Sources */,
 				75214341E9BAE9A0653E4827 /* ProcessingDetailView.swift in Sources */,
 				EEF8F48E419A1D7243D12B1A /* Reel.swift in Sources */,
+				06BB83B0B9D426CDF7BF5790 /* Event.swift in Sources */,
 				06BB83B0B9D426CDF7BF5770 /* Plan.swift in Sources */,
 				7E781D8F8A6B2BDEBA353FBF /* ReelDetailView.swift in Sources */,
 				06BB83B0B9D426CDF7BF5780 /* KeyMomentViewer.swift in Sources */,
 				ED2989F6FCF85EC06D054F5A /* ReelScoutApp.swift in Sources */,
 				2E977AE302FC409EE5DB9AEF /* ReelService.swift in Sources */,
 				06BB83B0B9D426CDF7BF5757 /* ReelStore.swift in Sources */,
+				06BB83B0B9D426CDF7BF5791 /* ReminderScheduler.swift in Sources */,
 				06BB83B0B9D426CDF7BF5758 /* ReelCache.swift in Sources */,
 				06BB83B0B9D426CDF7BF5760 /* FailureNotifier.swift in Sources */,
 				D02DF728B3F31F74D179E36C /* SavedStackView.swift in Sources */,

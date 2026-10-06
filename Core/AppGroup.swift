@@ -23,6 +23,14 @@ enum AppGroup {
     /// Other sites Kept can read videos from (Instagram is checked separately, by path).
     private static let otherHosts = ["tiktok.com", "youtube.com", "youtu.be", "twitter.com", "x.com", "reddit.com"]
 
+    /// Any ordinary web link (a page, a Google search). Reel and post links are checked separately above.
+    static func isWebLink(_ urlString: String) -> Bool {
+        guard let url = URL(string: urlString.trimmingCharacters(in: .whitespacesAndNewlines)),
+              let scheme = url.scheme?.lowercased(), ["http", "https"].contains(scheme),
+              let host = url.host, host.contains(".") else { return false }
+        return true
+    }
+
     /// True only for a link to one reel or post. The Instagram home page, search pages and so on are not reels.
     static func isSupportedLink(_ urlString: String) -> Bool {
         guard let url = URL(string: urlString.trimmingCharacters(in: .whitespacesAndNewlines)),
